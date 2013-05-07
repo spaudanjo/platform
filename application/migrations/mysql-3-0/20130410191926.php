@@ -1,6 +1,6 @@
 <?php defined('SYSPATH') OR die('No direct script access.');
 
-class Migration_3_0_20130410191926 extends Minion_Migration_Base {
+class Migration_Mysql_3_0_20130410191926 extends Minion_Migration_Base {
 
 	/**
 	 * Run queries needed to apply this migration

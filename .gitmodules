@@ -6,7 +6,7 @@
 	url = git://github.com/kohana/minion.git
 [submodule "modules/migrations"]
 	path = modules/migrations
-	url = git://github.com/kohana-minion/tasks-migrations.git
+	url = git://github.com/dkobia/tasks-migrations.git
 [submodule "modules/auth"]
 	path = modules/auth
 	url = git://github.com/kohana/auth.git
@@ -25,3 +25,6 @@
 [submodule "modules/unittest"]
 	path = modules/unittest
 	url = git://github.com/kohana/unittest.git
+[submodule "modules/postgresql"]
+	path = modules/postgresql
+	url = git@github.com:dkobia/kohana-postgresql.git

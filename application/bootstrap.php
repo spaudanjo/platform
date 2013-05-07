@@ -113,6 +113,7 @@ Kohana::modules(array(
 	'unittest'   => MODPATH.'unittest',   // Unit testing
 	'minion'     => MODPATH.'minion',
 	'migrations' => MODPATH.'migrations',
+	'postgresql' => MODPATH.'postgresql', // Database access
 	// 'userguide'  => MODPATH.'userguide',  // User guide and API documentation
 	));
 

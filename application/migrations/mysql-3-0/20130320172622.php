@@ -3,7 +3,7 @@
 /**
  * Initial core ushahidi structure
  */
-class Migration_3_0_20130320172622 extends Minion_Migration_Base {
+class Migration_Mysql_3_0_20130320172622 extends Minion_Migration_Base {
 
 	/**
 	 * Run queries needed to apply this migration
