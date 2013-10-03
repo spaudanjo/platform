@@ -9,7 +9,8 @@
  * @license    http://www.gnu.org/copyleft/gpl.html GNU General Public License Version 3 (GPLv3)
  */
 
-class TaskImport2xTest extends Unittest_TestCase {
+class TaskImport2xTest extends Unittest_TestCase
+{
 	public function setUp()
 	{
 		parent::setUp();
@@ -52,6 +53,7 @@ class TaskImport2xTest extends Unittest_TestCase {
 		}
 		catch (Exception $e)
 		{
+			throw $e; //debugging
 			$this->fail("Minion task ushahidi:import2x threw an exception");
 		}
 		
@@ -93,6 +95,7 @@ Imported 11 users./");
 		}
 		catch (Exception $e)
 		{
+			throw $e; //debugging
 			$this->fail("Minion task ushahidi:import2x threw an exception");
 		}
 		
