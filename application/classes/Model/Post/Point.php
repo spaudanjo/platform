@@ -54,7 +54,14 @@ class Model_Post_Point extends Model_Post_Geometry {
 			try
 			{
 				$geometry = $decoder->geomFromText($this->_object[$column]);
-				if ($geometry instanceof gisconverter\Point) return array('lon' => $geometry->lon, 'lat' => $geometry->lat);
+				if ($geometry instanceof gisconverter\Point)
+				{
+					return array(
+						'lon' => $geometry->lon,
+						'lat' => $geometry->lat,
+						'label' => $this->label
+					);
+				}
 			}
 			catch (gisconverter\InvalidText $itex) {
 				// noop - continue to return raw value
@@ -85,6 +92,11 @@ class Model_Post_Point extends Model_Post_Geometry {
 				AND array_key_exists('lon', $value) AND Valid::numeric($value['lon'])
 			)
 		{
+			if (array_key_exists('label', $value))
+			{
+				$this->label = $value['label'];
+			}
+
 			$value = strtr("POINT(lon lat)", $value);
 		}
 
