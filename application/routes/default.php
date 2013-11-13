@@ -88,6 +88,7 @@ Route::set('api', 'api/v2(/<controller>(/<id>))',
 	))
 	->defaults(array(
 		'action'     => 'index',
+		'controller' => 'Root',
 		'directory'  => 'Api'
 	));
 
