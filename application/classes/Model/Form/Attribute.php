@@ -2,14 +2,15 @@
 
 /**
  * Model for Form_Attributes
- * 
+ *
  * @author     Ushahidi Team <team@ushahidi.com>
  * @package    Ushahidi\Application\Models
  * @copyright  2013 Ushahidi
  * @license    https://www.gnu.org/licenses/agpl-3.0.html GNU Affero General Public License Version 3 (AGPL3)
  */
 
-class Model_Form_Attribute extends ORM implements Acl_Resource_Interface {
+class Model_Form_Attribute extends ORM implements Acl_Resource_Interface
+{
 	/**
 	 * An attribute has and belongs to many forms
 	 * An attribute has and belongs to many form_groups
@@ -19,12 +20,12 @@ class Model_Form_Attribute extends ORM implements Acl_Resource_Interface {
 	protected $_has_many = array(
 		'form_groups' => array('through' => 'form_groups_form_attributes'),
 		);
-		
+
 	protected $_serialize_columns = array('options');
-		
+
 	/**
 	 * Reserved attribute keys to avoid confusion with Posts table columns
-	 * 
+	 *
 	 * @var array key names
 	 */
 	protected $_reserved_keys = array(
@@ -56,7 +57,7 @@ class Model_Form_Attribute extends ORM implements Acl_Resource_Interface {
 			'id' => array(
 				array('numeric')
 			),
-			
+
 			'form_id' => array(
 				array('numeric'),
 			),
@@ -123,7 +124,7 @@ class Model_Form_Attribute extends ORM implements Acl_Resource_Interface {
 
 	/**
 	 * Prepare attribute data for API
-	 * 
+	 *
 	 * @return array $response - array to be returned by API (as json)
 	 */
 	public function for_api()
@@ -133,7 +134,7 @@ class Model_Form_Attribute extends ORM implements Acl_Resource_Interface {
 		{
 			$response = array(
 				'id' => $this->id,
-				'url' => URL::site('api/v'.Ushahidi_Api::version().'/attributes/'.$this->id, Request::current()),
+				'url' => URL::site('api/v'.Controller_Api_Core::version().'/attributes/'.$this->id, Request::current()),
 				'key' => $this->key,
 				'label' => $this->label,
 				'input' => $this->input,
@@ -156,7 +157,7 @@ class Model_Form_Attribute extends ORM implements Acl_Resource_Interface {
 
 		return $response;
 	}
-	
+
 	/**
 	 * Returns the string identifier of the Resource
 	 *

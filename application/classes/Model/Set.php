@@ -9,7 +9,8 @@
  * @license    https://www.gnu.org/licenses/agpl-3.0.html GNU Affero General Public License Version 3 (AGPL3)
  */
 
-class Model_Set extends ORM implements Acl_Resource_Interface {
+class Model_Set extends ORM implements Acl_Resource_Interface
+{
 	/**
 	 * A set has and belongs to many posts
 	 *
@@ -39,13 +40,13 @@ class Model_Set extends ORM implements Acl_Resource_Interface {
 			'id' => array(
 				array('numeric')
 			),
-			
-			
+
+
 			'user_id' => array(
 				array('numeric'),
 				array(array($this, 'user_exists'), array(':field', ':value'))
 			),
-			
+
 			//Name of set
 			'name' => array(
 				array('not_empty'),
@@ -53,7 +54,7 @@ class Model_Set extends ORM implements Acl_Resource_Interface {
 				array('max_length', array(':value', 255))
 			)
 		);
-			
+
 	}
 
 	/**
@@ -74,9 +75,9 @@ class Model_Set extends ORM implements Acl_Resource_Interface {
 	protected $_updated_column = array('column' => 'updated', 'format' => TRUE);
 
 	/**
-	 * Prepare set data for API, along with all its 
+	 * Prepare set data for API, along with all its
 	 * groups and attributes
-	 * 
+	 *
 	 * @return array $response - array to be returned by API (as json)
 	 */
 	public function for_api()
@@ -86,12 +87,12 @@ class Model_Set extends ORM implements Acl_Resource_Interface {
 		{
 			$response = array(
 				'id' => $this->id,
-				'url' => URL::site('api/v'.Ushahidi_Api::version().'/sets/'.$this->id, Request::current()),
+				'url' => URL::site('api/v'.Controller_Api_Core::version().'/sets/'.$this->id, Request::current()),
 				'name' => $this->name,
 				'filter' => $this->filter,
 				'user' => empty($this->user_id) ? NULL : array(
 					'id' => $this->user_id,
-					'url' => URL::site('api/v'.Ushahidi_Api::version().'/users/'.$this->user_id, Request::current())
+					'url' => URL::site('api/v'.Controller_Api_Core::version().'/users/'.$this->user_id, Request::current())
 				),
 
 				'created' => ($created = DateTime::createFromFormat('U', $this->created))
@@ -114,7 +115,7 @@ class Model_Set extends ORM implements Acl_Resource_Interface {
 
 		return $response;
 	}
-	
+
 	/**
 	 * Returns the string identifier of the Resource
 	 *

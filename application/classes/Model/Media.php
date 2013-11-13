@@ -9,7 +9,8 @@
  * @license    https://www.gnu.org/licenses/agpl-3.0.html GNU Affero General Public License Version 3 (AGPL3)
  */
 
-class Model_Media extends ORM implements Acl_Resource_Interface {
+class Model_Media extends ORM implements Acl_Resource_Interface
+{
 
 	/**
 	 * Rules for the media model
@@ -71,7 +72,7 @@ class Model_Media extends ORM implements Acl_Resource_Interface {
 
 			$response = array(
 				'id' => $this->id,
-				'url' => URL::site('api/v'.Ushahidi_Api::version().'/media/'.$this->id, Request::current()),
+				'url' => URL::site('api/v'.Controller_Api_Core::version().'/media/'.$this->id, Request::current()),
 				'caption' => $this->caption,
 				'mime' => $this->mime,
 				'original_file_url' => URL::site(Media::uri($relative_path.$this->o_filename), Request::current()),

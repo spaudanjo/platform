@@ -2,20 +2,21 @@
 
 /**
  * Model for Posts
- * 
+ *
  * @author     Ushahidi Team <team@ushahidi.com>
  * @package    Ushahidi\Application\Models
  * @copyright  2013 Ushahidi
  * @license    https://www.gnu.org/licenses/agpl-3.0.html GNU Affero General Public License Version 3 (AGPL3)
  */
 
-class Model_Post extends ORM implements Acl_Resource_Interface {
+class Model_Post extends ORM implements Acl_Resource_Interface
+{
 	/**
 	 * A post has many comments decimal, geometry, int
 	 * point, text, varchar, tasks
-	 * 
+	 *
 	 * A post has and belongs to many sets and tags
-	 * 
+	 *
 	 * A post has many [children] posts
 	 *
 	 * @var array Relationships
@@ -61,7 +62,7 @@ class Model_Post extends ORM implements Acl_Resource_Interface {
 
 	/**
 	 * Filters for the Post model
-	 * 
+	 *
 	 * @return array Filters
 	 */
 	public function filters()
@@ -72,7 +73,7 @@ class Model_Post extends ORM implements Acl_Resource_Interface {
 				// Make sure we have a URL-safe title.
 				array('URL::title')
 			),
-			
+
 			'locale' => array(
 				array('trim'),
 				array('UTF8::strtolower')
@@ -91,7 +92,7 @@ class Model_Post extends ORM implements Acl_Resource_Interface {
 			'id' => array(
 				array('numeric')
 			),
-			
+
 			'form_id' => array(
 				array('not_empty'),
 				array('numeric'),
@@ -130,14 +131,14 @@ class Model_Post extends ORM implements Acl_Resource_Interface {
 					'alert'
 				)) )
 			),
-			
+
 			// Post slug
 			'slug' => array(
 				array('alpha_dash', array(':value', TRUE)),
 				array('max_length', array(':value', 150)),
 				array(array($this, 'unique_slug'), array(':field', ':value'))
 			),
-			
+
 			// Post locale
 			'locale' => array(
 				array('not_empty'),
@@ -156,12 +157,12 @@ class Model_Post extends ORM implements Acl_Resource_Interface {
 	{
 		// Skip check if parent is empty
 		if (empty($value)) return TRUE;
-		
+
 		$parent = ORM::factory('Post')
 			->where('id', '=', $value)
 			->where('id', '!=', $this->id)
 			->find();
-		
+
 		return $parent->loaded();
 	}
 
@@ -182,7 +183,7 @@ class Model_Post extends ORM implements Acl_Resource_Interface {
 				->where($field, '=', $value)
 				->where('type', '=', 'report')
 				->find();
-	
+
 			if ($this->loaded())
 			{
 				return ( ! ($model->loaded() AND $model->pk() != $this->pk()));
@@ -190,7 +191,7 @@ class Model_Post extends ORM implements Acl_Resource_Interface {
 
 			return ( ! $model->loaded());
 		}
-		
+
 		// otherwise skip the check
 		return TRUE;
 	}
@@ -210,7 +211,7 @@ class Model_Post extends ORM implements Acl_Resource_Interface {
 			// Is locale the same as parent?
 			if ($this->parent->locale == $this->locale)
 				return FALSE;
-			
+
 			// Check for other translations
 			$model = ORM::factory($this->object_name())
 				->where($field, '=', $value)
@@ -222,10 +223,10 @@ class Model_Post extends ORM implements Acl_Resource_Interface {
 			{
 				return ( ! ($model->loaded() AND $model->pk() != $this->pk()));
 			}
-	
+
 			return ( ! $model->loaded());
 		}
-		
+
 		// otherwise skip the check
 		return TRUE;
 	}
@@ -238,7 +239,7 @@ class Model_Post extends ORM implements Acl_Resource_Interface {
 		if (empty($this->slug))
 		{
 			$this->slug = $this->title;
-			
+
 			// FIXME horribly inefficient
 			// If the slug exists add a count to the end
 			$i = 1;
@@ -260,14 +261,14 @@ class Model_Post extends ORM implements Acl_Resource_Interface {
 	public function save(Validation $validation = NULL)
 	{
 		$this->generate_slug_if_empty();
-		
+
 		return parent::save($validation);
 	}
 
 	/**
 	 * Prepare single post for api ( ++ Hairy :) )
 	 * along with values from attached tables
-	 * 
+	 *
 	 * @return array $response
 	 * @todo the queries need some optimizing (EAV Fun)
 	 */
@@ -281,15 +282,15 @@ class Model_Post extends ORM implements Acl_Resource_Interface {
 				'url' => $this->url(),
 				'parent' => empty($this->parent_id) ? NULL : array(
 					'id' => $this->parent_id,
-					'url' => URL::site('api/v'.Ushahidi_Api::version().'/posts/'.$this->parent_id, Request::current())
+					'url' => URL::site('api/v'.Controller_Api_Core::version().'/posts/'.$this->parent_id, Request::current())
 				),
 				'user' => empty($this->user_id) ? NULL : array(
 					'id' => $this->user_id,
-					'url' => URL::site('api/v'.Ushahidi_Api::version().'/users/'.$this->user_id, Request::current())
+					'url' => URL::site('api/v'.Controller_Api_Core::version().'/users/'.$this->user_id, Request::current())
 				),
 				'form' => empty($this->form_id) ? NULL : array(
 					'id' => $this->form_id,
-					'url' => URL::site('api/v'.Ushahidi_Api::version().'/forms/'.$this->form_id, Request::current()),
+					'url' => URL::site('api/v'.Controller_Api_Core::version().'/forms/'.$this->form_id, Request::current()),
 				),
 				'title' => $this->title,
 				'content' => $this->content,
@@ -365,7 +366,7 @@ class Model_Post extends ORM implements Acl_Resource_Interface {
 					'id' => $result['id'],
 					'value' => $result['value']
 				);
-				
+
 				// First or single value for attribute
 				if (! isset($response['values'][$result['key']]))
 				{
@@ -398,7 +399,7 @@ class Model_Post extends ORM implements Acl_Resource_Interface {
 					'id' => $point->id,
 					'value' => $point->value
 				);
-				
+
 				// First or single value for attribute
 				if (! isset($response['values'][$point->key]))
 				{
@@ -417,7 +418,7 @@ class Model_Post extends ORM implements Acl_Resource_Interface {
 				// @todo use $tag->for_api() once thats built
 				$response['tags'][] = array(
 					'id' => $tag->id,
-					'url' => URL::site('api/v'.Ushahidi_Api::version().'/tags/'.$tag->id, Request::current())
+					'url' => URL::site('api/v'.Controller_Api_Core::version().'/tags/'.$tag->id, Request::current())
 				);
 			}
 		}
@@ -438,15 +439,15 @@ class Model_Post extends ORM implements Acl_Resource_Interface {
 		switch ($this->type)
 		{
 			case 'revision':
-				return URL::site('api/v'.Ushahidi_Api::version().'/posts/'.$this->parent_id.'/revisions/'.$this->id, Request::current());
+				return URL::site('api/v'.Controller_Api_Core::version().'/posts/'.$this->parent_id.'/revisions/'.$this->id, Request::current());
 				break;
 			case 'translation':
-				return URL::site('api/v'.Ushahidi_Api::version().'/posts/'.$this->parent_id.'/translations/'.$this->id, Request::current());
+				return URL::site('api/v'.Controller_Api_Core::version().'/posts/'.$this->parent_id.'/translations/'.$this->id, Request::current());
 				break;
 			case 'report':
 			default:
 				// @todo maybe put 'updates' url as /post/:parent_id/updates/:id
-				return URL::site('api/v'.Ushahidi_Api::version().'/posts/'.$this->id, Request::current());
+				return URL::site('api/v'.Controller_Api_Core::version().'/posts/'.$this->id, Request::current());
 				break;
 		}
 	}
@@ -465,7 +466,7 @@ class Model_Post extends ORM implements Acl_Resource_Interface {
 	{
 		return $this->children->where('type', '=', 'translations');
 	}
-	
+
 	/**
 	 * Returns the string identifier of the Resource
 	 *

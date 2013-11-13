@@ -135,7 +135,7 @@ abstract class Ushahidi_Controller_API_Forms_Groups_Attributes extends Controlle
 			try
 			{
 				$post['form_group_id'] = $group_id;
-				$response = Request::factory('api/v'.Ushahidi_Api::version().'/attributes/')
+				$response = Request::factory('api/v'.Controller_Api_Core::version().'/attributes/')
 					->method(Request::POST)
 					->body(json_encode($post))
 					->headers($this->request->headers()) // Forward headers for OAuth checks

@@ -2,14 +2,15 @@
 
 /**
  * Model for Form_Groups
- * 
+ *
  * @author     Ushahidi Team <team@ushahidi.com>
  * @package    Ushahidi\Application\Models
  * @copyright  2013 Ushahidi
  * @license    https://www.gnu.org/licenses/agpl-3.0.html GNU Affero General Public License Version 3 (AGPL3)
  */
 
-class Model_Form_Group extends ORM implements Acl_Resource_Interface {
+class Model_Form_Group extends ORM implements Acl_Resource_Interface
+{
 	/**
 	 * A form_group has and belongs to many attributes
 	 *
@@ -39,7 +40,7 @@ class Model_Form_Group extends ORM implements Acl_Resource_Interface {
 			'id' => array(
 				array('numeric')
 			),
-			
+
 			'form_id' => array(
 				array('numeric'),
 				array(array($this, 'fk_exists'), array('Form', ':field', ':value'))
@@ -56,7 +57,7 @@ class Model_Form_Group extends ORM implements Acl_Resource_Interface {
 
 	/**
 	 * Prepare group data for API
-	 * 
+	 *
 	 * @return array $response - array to be returned by API (as json)
 	 */
 	public function for_api()
@@ -66,16 +67,16 @@ class Model_Form_Group extends ORM implements Acl_Resource_Interface {
 		{
 			$response = array(
 				'id' => $this->id,
-				'url' => URL::site('api/v'.Ushahidi_Api::version().'/forms/'.$this->form_id.'/groups/'.$this->id, Request::current()),
+				'url' => URL::site('api/v'.Controller_Api_Core::version().'/forms/'.$this->form_id.'/groups/'.$this->id, Request::current()),
 				'form' => empty($this->form_id) ? NULL : array(
-					'url' => URL::site('api/v'.Ushahidi_Api::version().'/forms/'.$this->form_id, Request::current()),
+					'url' => URL::site('api/v'.Controller_Api_Core::version().'/forms/'.$this->form_id, Request::current()),
 					'id' => $this->form_id
 				),
 				'label' => $this->label,
 				'priority' => $this->priority,
 				'attributes' => array()
 				);
-			
+
 			foreach ($this->form_attributes->find_all() as $attribute)
 			{
 				$response['attributes'][] = $attribute->for_api();
@@ -92,7 +93,7 @@ class Model_Form_Group extends ORM implements Acl_Resource_Interface {
 
 		return $response;
 	}
-	
+
 	/**
 	 * Returns the string identifier of the Resource
 	 *

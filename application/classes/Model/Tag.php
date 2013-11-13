@@ -2,14 +2,15 @@
 
 /**
  * Model for Tags
- * 
+ *
  * @author     Ushahidi Team <team@ushahidi.com>
  * @package    Ushahidi\Application\Models
  * @copyright  2013 Ushahidi
  * @license    https://www.gnu.org/licenses/agpl-3.0.html GNU Affero General Public License Version 3 (AGPL3)
  */
 
-class Model_Tag extends ORM implements Acl_Resource_Interface {
+class Model_Tag extends ORM implements Acl_Resource_Interface
+{
 	/**
 	 * A tag has and belongs to many posts
 	 * A tag has many [children] tags
@@ -42,7 +43,7 @@ class Model_Tag extends ORM implements Acl_Resource_Interface {
 
 	/**
 	 * Filters for the Tag model
-	 * 
+	 *
 	 * @return array Filters
 	 */
 	public function filters()
@@ -53,14 +54,14 @@ class Model_Tag extends ORM implements Acl_Resource_Interface {
 				// Make sure we have a URL-safe title.
 				array('URL::title')
 			),
-			
+
 			'color' => array(
 				// Remove # from start of color value
 				array('ltrim', array(':value', '#'))
 			)
 		);
 	}
-	
+
 	/**
 	 * Rules for the tag model
 	 *
@@ -72,14 +73,14 @@ class Model_Tag extends ORM implements Acl_Resource_Interface {
 			'id' => array(
 				array('numeric')
 			),
-			
+
 			'tag' => array(
 				array('not_empty'),
 				array('min_length', array(':value', 3)),
 				array('max_length', array(':value', 200)),
 				array(array($this, 'unique_tag_parent_type'), array(':field', ':value'))
 			),
-			
+
 			// Tag slug
 			'slug' => array(
 				array('alpha_dash', array(':value', TRUE)),
@@ -96,7 +97,7 @@ class Model_Tag extends ORM implements Acl_Resource_Interface {
 					// @todo add a type for free tagging? vs structured categories
 				) ) )
 			),
-			
+
 			'priority' => array(
 				array('numeric')
 			),
@@ -105,7 +106,7 @@ class Model_Tag extends ORM implements Acl_Resource_Interface {
 				array('numeric'),
 				array(array($this, 'parent_exists'), array(':field', ':value'))
 			),
-			
+
 			'color' => array(
 				array('color')
 			)
@@ -123,7 +124,7 @@ class Model_Tag extends ORM implements Acl_Resource_Interface {
 			->where('type', '=', $this->type)
 			->where('id', '!=', $this->id)
 			->find();
-		
+
 		return ! $duplicate->loaded();
 	}
 
@@ -134,12 +135,12 @@ class Model_Tag extends ORM implements Acl_Resource_Interface {
 	{
 		// Skip check if parent is empty
 		if (empty($value)) return TRUE;
-		
+
 		$parent = ORM::factory('Tag')
 			->where('id', '=', $value)
 			->where('id', '!=', $this->id)
 			->find();
-		
+
 		return $parent->loaded();
 	}
 
@@ -151,7 +152,7 @@ class Model_Tag extends ORM implements Acl_Resource_Interface {
 		if (empty($this->slug))
 		{
 			$this->slug = $this->tag;
-			
+
 			// FIXME horribly inefficient
 			// If the slug exists add a count to the end
 			$i = 1;
@@ -173,14 +174,14 @@ class Model_Tag extends ORM implements Acl_Resource_Interface {
 	public function save(Validation $validation = NULL)
 	{
 		$this->generate_slug_if_empty();
-		
+
 		return parent::save($validation);
 	}
 
 	/**
-	 * Prepare form data for API, along with all its 
+	 * Prepare form data for API, along with all its
 	 * groups and attributes
-	 * 
+	 *
 	 * @return array $response - array to be returned by API (as json)
 	 */
 	public function for_api()
@@ -190,10 +191,10 @@ class Model_Tag extends ORM implements Acl_Resource_Interface {
 		{
 			$response = array(
 				'id' => $this->id,
-				'url' => URL::site('api/v'.Ushahidi_Api::version().'/tags/'.$this->id, Request::current()),
+				'url' => URL::site('api/v'.Controller_Api_Core::version().'/tags/'.$this->id, Request::current()),
 				'parent' => empty($this->parent_id) ? NULL : array(
 					'id' => $this->parent_id,
-					'url' => URL::site('api/v'.Ushahidi_Api::version().'/tags/'.$this->parent_id, Request::current())
+					'url' => URL::site('api/v'.Controller_Api_Core::version().'/tags/'.$this->parent_id, Request::current())
 				),
 				'tag' => $this->tag,
 				'slug' => $this->slug,
@@ -217,7 +218,7 @@ class Model_Tag extends ORM implements Acl_Resource_Interface {
 
 		return $response;
 	}
-	
+
 	/**
 	 * Returns the string identifier of the Resource
 	 *
@@ -227,5 +228,5 @@ class Model_Tag extends ORM implements Acl_Resource_Interface {
 	{
 		return 'tags';
 	}
-	
+
 }

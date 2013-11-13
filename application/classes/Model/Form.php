@@ -2,14 +2,15 @@
 
 /**
  * Model for Forms
- * 
+ *
  * @author     Ushahidi Team <team@ushahidi.com>
  * @package    Ushahidi\Application\Models
  * @copyright  2013 Ushahidi
  * @license    https://www.gnu.org/licenses/agpl-3.0.html GNU Affero General Public License Version 3 (AGPL3)
  */
 
-class Model_Form extends ORM implements Acl_Resource_Interface {
+class Model_Form extends ORM implements Acl_Resource_Interface
+{
 	/**
 	 * A form has many groups
 	 * A form has and belongs to many attributes
@@ -52,7 +53,7 @@ class Model_Form extends ORM implements Acl_Resource_Interface {
 			'id' => array(
 				array('numeric')
 			),
-			
+
 			'name' => array(
 				array('not_empty'),
 				array('min_length', array(':value', 3)),
@@ -77,9 +78,9 @@ class Model_Form extends ORM implements Acl_Resource_Interface {
 	protected $_updated_column = array('column' => 'updated', 'format' => 'Y-m-d H:i:s');
 
 	/**
-	 * Prepare form data for API, along with all its 
+	 * Prepare form data for API, along with all its
 	 * groups and attributes
-	 * 
+	 *
 	 * @return array $response - array to be returned by API (as json)
 	 */
 	public function for_api()
@@ -89,7 +90,7 @@ class Model_Form extends ORM implements Acl_Resource_Interface {
 		{
 			$response = array(
 				'id' => $this->id,
-				'url' => URL::site('api/v'.Ushahidi_Api::version().'/forms/'.$this->id, Request::current()),
+				'url' => URL::site('api/v'.Controller_Api_Core::version().'/forms/'.$this->id, Request::current()),
 				'name' => $this->name,
 				'description' => $this->description,
 				'type' => $this->type,
@@ -118,7 +119,7 @@ class Model_Form extends ORM implements Acl_Resource_Interface {
 
 		return $response;
 	}
-	
+
 	/**
 	 * Returns the string identifier of the Resource
 	 *
