@@ -1,7 +1,7 @@
 <?php defined('SYSPATH') OR die('No direct access allowed.');
 
 /**
- * Ushahidi API Base Controller
+ * Ushahidi API Core Controller
  *
  * @author     Ushahidi Team <team@ushahidi.com>
  * @package    Ushahidi\Application\Controllers
@@ -9,12 +9,17 @@
  * @license    https://www.gnu.org/licenses/agpl-3.0.html GNU Affero General Public License Version 3 (AGPL3)
  */
 
-class Ushahidi_Api extends Controller {
+abstract class Ushahidi_Controller_Api_Core extends Controller {
 
 	/**
 	 * @var Current API version
 	 */
 	protected static $version = '2';
+
+	/**
+	 * @var Current API version
+	 */
+	protected static $ushahidi_version = '3.0.0-alpha.2';
 
 	/**
 	 * @var Object Request Payload
@@ -98,11 +103,11 @@ class Ushahidi_Api extends Controller {
 	 * @var string|ORM  resource used for access check and get/:id put/:id requests
 	 */
 	protected $_resource;
-	
+
 	protected $_auth;
 	protected $_acl;
 	protected $_user;
-	
+
 	public function before()
 	{
 		parent::before();
@@ -137,6 +142,14 @@ class Ushahidi_Api extends Controller {
 	}
 
 	/**
+	 * Get current api version
+	 */
+	public static function ushahidi_version()
+	{
+		return self::$ushahidi_version;
+	}
+
+	/**
 	 * Get resource object/string
 	 * @return string|ORM
 	 */
@@ -150,10 +163,10 @@ class Ushahidi_Api extends Controller {
 
 		return $this->_resource;
 	}
-	
+
 	/**
 	 * Load resource object
-	 * 
+	 *
 	 * @return void
 	 */
 	protected function _resource()
@@ -161,11 +174,11 @@ class Ushahidi_Api extends Controller {
 		// @todo split this up by get resource for collection, and get individual resource.. or maybe by action?
 		$this->_resource = 'undefined';
 	}
-	
+
 	/**
 	 * Check if access is allowed
 	 * Checks if oauth token and user permissions
-	 * 
+	 *
 	 * @return bool
 	 * @throws HTTP_Exception|OAuth_Exception
 	 */
@@ -180,11 +193,11 @@ class Ushahidi_Api extends Controller {
 			$this->_oauth2_server->processResponse($this->response);
 			return FALSE;
 		}
-		
+
 		// Get user from token
 		$token = $this->_oauth2_server->getAccessTokenData($request, $response);
 		$this->user = ORM::factory('User', $token['user_id']);
-		
+
 		$resource = $this->resource();
 		// Does the user have required role/permissions ?
 		if (! $this->acl->is_allowed($this->user, $resource, strtolower($this->request->method())) )
