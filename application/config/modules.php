@@ -22,9 +22,10 @@ return array(
 	'koauth'     => MODPATH.'koauth',
 	'media'      => MODPATH.'media',
 	'ushahidiui' => MODPATH.'UshahidiUI',
-	'imagefly'   => MODPATH.'imagefly', // Dynamic image generation
-	'ACL'        => MODPATH.'ACL', // Access control layer based on Zend_ACL
-	'A1'         => MODPATH.'A1', // Auth library using bcrypt
-	'A2'         => MODPATH.'A2', // Tying A1/Auth and ACL together
+	'imagefly'   => MODPATH.'imagefly',   // Dynamic image generation
+	'ACL'        => MODPATH.'ACL',        // Access control layer based on Zend_ACL
+	'A1'         => MODPATH.'A1',         // Auth library using bcrypt
+	'A2'         => MODPATH.'A2',         // Tying A1/Auth and ACL together
 	// 'userguide'  => MODPATH.'userguide',  // User guide and API documentation
+	'cloud'      => MODPATH.'cloud'       // Cloud module, hosting multiple sites on one install
 );
