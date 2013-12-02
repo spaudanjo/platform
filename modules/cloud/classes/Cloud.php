@@ -39,19 +39,20 @@ class Cloud
 		}
 
 		$site_found = false;
+		$active = NULL;
 
-		$sql = "SELECT db_hostname, db_username, db_password, db_database FROM site WHERE domain = ? LIMIT 1";
+		$sql = "SELECT active, db_hostname, db_username, db_password, db_database FROM site WHERE domain = ? LIMIT 1";
 		if ($stmt = $db->prepare($sql))
 		{
 			$stmt->bind_param("s", $current_domain);
 			$stmt->execute();
-			$stmt->bind_result($hostname, $username, $password, $database);
+			$stmt->bind_result($active, $hostname, $username, $password, $database);
 			$stmt->store_result();
 			$stmt->fetch();
 
 			$site_found = (bool)$stmt->num_rows;
 
-			if ($site_found)
+			if ($site_found AND $active)
 			{
 				// Set the proper database
 				$cloud_db['default']['connection']['hostname'] = $hostname;
@@ -71,6 +72,11 @@ class Cloud
 		if (! $site_found)
 		{
 			throw new Kohana_Exception('Cloud Module Error: There is no site configured at this address.');
+		}
+
+		if($site_found AND $active === 0)
+		{
+			throw new Kohana_Exception('Cloud Module Error: The site at this address is inactive.');
 		}
 
 		return $cloud_db;
