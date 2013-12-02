@@ -41,7 +41,7 @@ class Cloud
 		$site_found = false;
 		$active = NULL;
 
-		$sql = "SELECT active, db_hostname, db_username, db_password, db_database FROM site WHERE domain = ? LIMIT 1";
+		$sql = "SELECT active, db_hostname, db_username, db_password, db_database FROM cloud_sites WHERE domain = ? LIMIT 1";
 		if ($stmt = $db->prepare($sql))
 		{
 			$stmt->bind_param("s", $current_domain);
@@ -80,6 +80,29 @@ class Cloud
 		}
 
 		return $cloud_db;
+	}
+
+	/**
+	 * Creates a new site
+	 */
+	public static function create($params)
+	{
+		// Make sure we have a full hostname
+		$domain = $params['domain'];
+		if (! strpos($domain,'.'))
+		{
+			$config = Kohana::$config->load('cloud');
+			$cloud_domain = $config->get('cloud_domain');
+			$domain .= '.'.$cloud_domain;
+		}
+
+
+
+		$site = ORM::factory('Cloud_Site');
+		$site->user_id = 1;
+		$site->domain = $domain;
+		$site->active = 1;
+		return $site->save();
 	}
 
 	/**

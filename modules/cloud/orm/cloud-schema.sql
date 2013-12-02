@@ -1,4 +1,4 @@
-CREATE TABLE `site` (
+CREATE TABLE `cloud_sites` (
   `site_id` int(11) unsigned NOT NULL AUTO_INCREMENT,
   `user_id` int(11) unsigned NOT NULL,
   `domain` varchar(100) NOT NULL DEFAULT '',
@@ -9,5 +9,6 @@ CREATE TABLE `site` (
   `db_username` varchar(100) NOT NULL DEFAULT '',
   `db_password` varchar(100) NOT NULL DEFAULT '',
   `db_database` varchar(100) NOT NULL DEFAULT '',
-  PRIMARY KEY (`site_id`)
+  PRIMARY KEY (`site_id`),
+  UNIQUE KEY `unique_domain` (`domain`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
