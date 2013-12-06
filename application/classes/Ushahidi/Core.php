@@ -40,7 +40,7 @@ abstract class Ushahidi_Core {
 	public static function load()
 	{
 		if (! is_dir(PLUGINPATH)) return;
-
+var_dump(PLUGINPATH, realpath(PLUGINPATH));
 		// Load Plugins
 		$results = scandir(PLUGINPATH);
 		foreach ($results as $result)
@@ -49,9 +49,10 @@ abstract class Ushahidi_Core {
 
 			if (is_dir(PLUGINPATH.$result))
 			{
-				Kohana::modules( array($result => PLUGINPATH.$result) + Kohana::modules() );
+				Kohana::modules( Kohana::modules() + array($result => PLUGINPATH.$result) );
 			}
 		}
+		var_dump(Kohana::modules());
 	}
 
 	/**

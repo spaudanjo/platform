@@ -72,10 +72,11 @@ if ( ! is_dir($modules) AND is_dir(DOCROOT.$modules))
 {
 	$modules = DOCROOT.$modules;
 }
-
+var_dump($plugins);
 // Make the plugins relative to the docroot
 if ( ! is_dir($plugins) AND is_dir(DOCROOT.$plugins))
 {
+var_dump($plugins);
 	$plugins = DOCROOT.$plugins;
 }
 
@@ -85,6 +86,7 @@ if ( ! is_dir($system) AND is_dir(DOCROOT.$system))
 	$system = DOCROOT.$system;
 }
 
+var_dump(realpath($plugins));
 // Define the absolute paths for configured directories
 define('APPPATH', realpath($application).DIRECTORY_SEPARATOR);
 define('MODPATH', realpath($modules).DIRECTORY_SEPARATOR);
