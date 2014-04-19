@@ -22,7 +22,6 @@ return array(
 	'migrations' => MODPATH.'migrations',
 	'koauth'     => MODPATH.'koauth',
 	'media'      => MODPATH.'media',
-	'ushahidiui' => MODPATH.'UshahidiUI',
 	'imagefly'   => MODPATH.'imagefly', // Dynamic image generation
 	'ACL'        => MODPATH.'ACL', // Access control layer based on Zend_ACL
 	'A1'         => MODPATH.'A1', // Auth library using bcrypt
