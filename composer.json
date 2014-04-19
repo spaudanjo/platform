@@ -1,6 +1,7 @@
 {
     "require" : {
         "pimple/pimple": "2.0.*",
+        "slim/slim": "2.*",
         "kohana/core" : "3.3.*@dev",
         "kohana/database" : "3.3.*@dev",
         "kohana/cache" : "3.3.*@dev",
@@ -28,7 +29,8 @@
     },
     "autoload": {
         "psr-0": {
-            "Ushahidi\\": "src"
+            "Ushahidi\\": "src",
+            "UshahidiWeb\\": "src"
         }
     },
     "repositories": [
