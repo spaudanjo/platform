@@ -88,7 +88,7 @@ module.exports = function(grunt) {
 				src: php_web_src,
 				options :
 				{
-					output: 'docs/web/',
+					output: '../docs/web/',
 					layout: 'linear'
 				}
 			}
@@ -144,7 +144,8 @@ module.exports = function(grunt) {
 	require('load-grunt-tasks')(grunt);
 
 	grunt.registerTask('test', ['jshint']);
-	grunt.registerTask('build', ['requirejs', 'imagemin', 'compass', 'docco']);
-	grunt.registerTask('default', ['jshint', 'requirejs', 'compass', 'docco']);
+	grunt.registerTask('docs', ['docco']);
+	grunt.registerTask('build', ['requirejs', 'imagemin', 'compass']);
+	grunt.registerTask('default', ['jshint', 'requirejs', 'compass']);
 
 };

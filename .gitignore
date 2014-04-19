@@ -6,6 +6,7 @@ composer.lock
 composer.phar
 vendor/*
 bin/*
+docs/*
 node_modules*
 .vagrant/*
 .sass-cache*
