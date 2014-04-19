@@ -1,5 +1,7 @@
 module.exports = function(grunt) {
 
+	var php_web_src = ['*.php', '../src/UshahidiWeb/**/*.php'];
+
 	grunt.initConfig(
 	{
 		pkg : grunt.file.readJSON('package.json'),
@@ -78,6 +80,20 @@ module.exports = function(grunt) {
 			}
 		},
 
+		// https://github.com/DavidSouther/grunt-docco
+		docco :
+		{
+			web :
+			{
+				src: php_web_src,
+				options :
+				{
+					output: 'docs/web/',
+					layout: 'linear'
+				}
+			}
+		},
+
 		watch :
 		{
 			sass :
@@ -102,6 +118,25 @@ module.exports = function(grunt) {
 				{
 					livereload : true
 				}
+			},
+
+			makedocs :
+			{
+				files : php_web_src,
+				tasks : ['docco'],
+				options :
+				{
+					spawn: false,
+				}
+			},
+
+			freshdocs :
+			{
+				files : ['docs/web/*.html'],
+				options :
+				{
+					livereload: true
+				}
 			}
 		}
 	});
@@ -109,7 +144,7 @@ module.exports = function(grunt) {
 	require('load-grunt-tasks')(grunt);
 
 	grunt.registerTask('test', ['jshint']);
-	grunt.registerTask('build', ['requirejs', 'imagemin', 'compass']);
-	grunt.registerTask('default', ['jshint', 'requirejs', 'compass']);
+	grunt.registerTask('build', ['requirejs', 'imagemin', 'compass', 'docco']);
+	grunt.registerTask('default', ['jshint', 'requirejs', 'compass', 'docco']);
 
 };
