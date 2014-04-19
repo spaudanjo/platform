@@ -17,35 +17,35 @@
 		<meta name="viewport" content="width=device-width, initial-scale=1.0">
 		<meta name="apple-mobile-web-app-capable" content="yes" />
 		<!-- Leaflet CSS -->
-		<link rel="stylesheet" href="/css/plugins/leaflet.css" />
-		<link rel="stylesheet" type="text/css" href="/js/libs/leaflet-locatecontrol/src/L.Control.Locate.css"/>
+		<link rel="stylesheet" href="/media/css/plugins/leaflet.css" />
+		<link rel="stylesheet" type="text/css" href="/media/js/libs/leaflet-locatecontrol/src/L.Control.Locate.css"/>
 		<!--[if lte IE 8]>
-				<link rel="stylesheet" type="text/css" href="/js/libs/leaflet-locatecontrol/src/L.Control.Locate.ie.css"/>
+				<link rel="stylesheet" type="text/css" href="/media/js/libs/leaflet-locatecontrol/src/L.Control.Locate.ie.css"/>
 		<![endif]-->
 		<!-- Dropzone CSS -->
-		<link rel="stylesheet" href="/css/plugins/dropzone.css" />
+		<link rel="stylesheet" href="/media/css/plugins/dropzone.css" />
 		<!-- end Dropzone CSS -->
 
 		<!--Change to app.min.css for production-->
-				<link rel="stylesheet" type="text/css" href="/css/test/style.css"/>
+				<link rel="stylesheet" type="text/css" href="/media/css/test/style.css"/>
 		
 		<!-- Global site config -->
 		<script type="text/javascript">
 		  (function() {
-		    window.config = {"site":{"site_name":"testing site","owner_name":"testerbot","site_email":false},"features":{"media_uploads":false},"oauth":{"client":"ushahidiui","client_secret":""},"baseurl":"http:\/\/ushahidi.dev\/","imagedir":"images","cssdir":"css","jsdir":"js"};
+		    window.config = {"site":{"site_name":"testing site","owner_name":"testerbot","site_email":false},"features":{"media_uploads":false},"oauth":{"client":"ushahidiui","client_secret":""},"baseurl":"http:\/\/api.ushahidi.dev\/","imagedir":"media\/images","cssdir":"media\/css","jsdir":"media\/js"};
 		  })();
 		</script>
 		<!-- end global site config -->
 
 		<!--Change to Init.min.js below for production-->
-				<script type="text/javascript" src="/js/libs/require.js" data-main="/js/app/config/Init.js"></script>
+				<script type="text/javascript" src="/media/js/libs/require.js" data-main="/media/js/app/config/Init.js"></script>
 		
 		<!-- Custom Modernizr Build - add, subtract and rebuild at end of project -->
-		<script src="/js/libs/custom.modernizr.js"></script>
+		<script src="/media/js/libs/custom.modernizr.js"></script>
 
 		<!-- cross browser CSS3 pseudo-classes and attribute selectors with Selectivizr -->
 		<!--[if (gte IE 6)&(lte IE 8)]>
-			<script type="text/javascript" src="/js/vendor/selectivizr/selectivizr.js"></script>
+			<script type="text/javascript" src="/media/js/vendor/selectivizr/selectivizr.js"></script>
 			<noscript><link rel="stylesheet" href="[fallback css]" /></noscript>
 		<![endif]-->
 
