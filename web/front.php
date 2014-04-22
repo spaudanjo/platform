@@ -49,8 +49,11 @@ if (php_sapi_name() === 'cli-server') {
 
 require __DIR__ . '/../vendor/autoload.php';
 
-// The [app](app.html) is where basic configuration is read and routing generated.
+// Before we can include Kohana, we have to define the current directory as
+// the root. This is used for public assets, such as file and media uploads.
+define('DOCROOT', realpath(__DIR__) . DIRECTORY_SEPARATOR);
 
+// The [app](app.html) is where basic configuration is read and routing generated.
 $app = require __DIR__ . '/../src/UshahidiWeb/app.php';
 
 // Slim routing gets confused when using the built-in server, which requires us

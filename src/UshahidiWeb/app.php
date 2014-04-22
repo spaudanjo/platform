@@ -13,20 +13,48 @@ namespace Ushahidi;
 
 // It uses the [Slim][slim] framework.
 // [slim]: http://www.slimframework.com/
-
 use \Slim\Slim;
 
-// The app is extremely simple...
+// And it uses the [Kohana][kohana] framework.
+// [kohana]: http://kohanaframework.org/
+require __DIR__ . '/../../application/kohana.php';
 
+// The app is extremely simple...
 $app = new Slim(array(
     'templates.path' => __DIR__ . '/views',
 ));
 
 // All it does is display the [index view](indexView.html).
-
 $displayIndex = function ($path = null) use ($app) {
-    /* todo: use service to pass config into the view */
-    $app->render('indexView.php');
+
+    // The application service provider is used to access configuration.
+    $config = service('config');
+
+    // Which is passed into the [index view](indexView.html).
+    $app->render('indexView.php', [
+        'config' => [
+
+            // Because site and features are stored with the config service,
+            // admins can modify these values at any time.
+            'site'     => $config->get('site')->asArray(),
+            'features' => $config->get('features')->asArray(),
+
+            // But some configuration is can only be changed by modifying the install.
+            //
+            // TODO: *This configuration should also be loaded through the service.*
+            'oauth'    => [
+                'client' => 'ushahidiui',
+            ],
+
+            // And some configuration is dynamic.
+            //
+            // TODO: *All of these values should be dependency injected.*
+            'baseurl'  => \URL::base(TRUE, TRUE),
+            'imagedir' => \Media::uri('/images/'),
+            'cssdir'   => \Media::uri('/css/'),
+            'jsdir'    => \Media::uri('/js/'),
+            ],
+        ]);
 };
 
 

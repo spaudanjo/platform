@@ -11,41 +11,49 @@
 <head>
 		<meta charset="utf-8">
 		<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-		<title>testing site</title>
-		<meta name="description" content="testing site">
+		<title><?php echo HTML::entities($site_name = Arr::path($config, 'site.name')) ?></title>
+		<meta name="description" content="<?php echo HTML::entities($site_name) ?>">
 		<!-- Mobile Viewport meta tags -->
 		<meta name="viewport" content="width=device-width, initial-scale=1.0">
 		<meta name="apple-mobile-web-app-capable" content="yes" />
 		<!-- Leaflet CSS -->
-		<link rel="stylesheet" href="/media/css/plugins/leaflet.css" />
-		<link rel="stylesheet" type="text/css" href="/media/js/libs/leaflet-locatecontrol/src/L.Control.Locate.css"/>
+		<link rel="stylesheet" href="<?php echo Media::url('css/plugins/leaflet.css'); ?>" />
+		<link rel="stylesheet" type="text/css" href="<?php echo Media::url('js/libs/leaflet-locatecontrol/src/L.Control.Locate.css'); ?>"/>
 		<!--[if lte IE 8]>
-				<link rel="stylesheet" type="text/css" href="/media/js/libs/leaflet-locatecontrol/src/L.Control.Locate.ie.css"/>
+				<link rel="stylesheet" type="text/css" href="<?php echo Media::url('js/libs/leaflet-locatecontrol/src/L.Control.Locate.ie.css'); ?>"/>
 		<![endif]-->
 		<!-- Dropzone CSS -->
-		<link rel="stylesheet" href="/media/css/plugins/dropzone.css" />
+		<link rel="stylesheet" href="<?php echo Media::url('css/plugins/dropzone.css'); ?>" />
 		<!-- end Dropzone CSS -->
 
 		<!--Change to app.min.css for production-->
-				<link rel="stylesheet" type="text/css" href="/media/css/test/style.css"/>
-		
+		<?php if (Kohana::$environment == Kohana::PRODUCTION): ?>
+		<link rel="stylesheet" type="text/css" href="<?php echo Media::url('css/style.css'); ?>"/>
+		<?php else: ?>
+		<link rel="stylesheet" type="text/css" href="<?php echo Media::url('css/test/style.css'); ?>"/>
+		<?php endif; ?>
+
 		<!-- Global site config -->
 		<script type="text/javascript">
 		  (function() {
-		    window.config = {"site":{"site_name":"testing site","owner_name":"testerbot","site_email":false},"features":{"media_uploads":false},"oauth":{"client":"ushahidiui","client_secret":""},"baseurl":"http:\/\/api.ushahidi.dev\/","imagedir":"media\/images","cssdir":"media\/css","jsdir":"media\/js"};
+		    window.config = <?php echo json_encode($config, JSON_FORCE_OBJECT); ?>;
 		  })();
 		</script>
 		<!-- end global site config -->
 
 		<!--Change to Init.min.js below for production-->
-				<script type="text/javascript" src="/media/js/libs/require.js" data-main="/media/js/app/config/Init.js"></script>
-		
+		<?php if (Kohana::$environment == Kohana::PRODUCTION): ?>
+		<script type="text/javascript" src="<?php echo Media::url('js/app/config/Init.min.js'); ?>"></script>
+		<?php else: ?>
+		<script type="text/javascript" src="<?php echo Media::url('js/libs/require.js'); ?>" data-main="<?php echo Media::url('js/app/config/Init.js'); ?>"></script>
+		<?php endif; ?>
+
 		<!-- Custom Modernizr Build - add, subtract and rebuild at end of project -->
-		<script src="/media/js/libs/custom.modernizr.js"></script>
+		<script src="<?php echo Media::url('js/libs/custom.modernizr.js'); ?>"></script>
 
 		<!-- cross browser CSS3 pseudo-classes and attribute selectors with Selectivizr -->
 		<!--[if (gte IE 6)&(lte IE 8)]>
-			<script type="text/javascript" src="/media/js/vendor/selectivizr/selectivizr.js"></script>
+			<script type="text/javascript" src="js/vendor/selectivizr/selectivizr.js"></script>
 			<noscript><link rel="stylesheet" href="[fallback css]" /></noscript>
 		<![endif]-->
 
