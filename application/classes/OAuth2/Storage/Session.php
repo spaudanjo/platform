@@ -104,11 +104,11 @@ class OAuth2_Storage_Session extends OAuth2_Storage implements SessionInterface
 	public function associateAccessToken($sessionId, $accessToken, $expireTime)
 	{
 		$data = array(
-			'session_id'   => $sessionId,
-			'access_token' => $accessToken,
-			'expire_time'  => $expireTime,
+			'session_id'           => $sessionId,
+			'access_token'         => $accessToken,
+			'access_token_expires' => $expireTime,
 			);
-		$this->insert('oauth_session_access_tokens', $data);
+		return $this->insert('oauth_session_access_tokens', $data);
 	}
 
 	/**
@@ -340,7 +340,7 @@ class OAuth2_Storage_Session extends OAuth2_Storage implements SessionInterface
 			'id' => $accessTokenId,
 			);
 		$query = $this->select('oauth_session_access_tokens', $where);
-		return $this->select_one_result($query);
+		return $this->select_one_result($query) ?: array();
 	}
 
 	/**
@@ -398,7 +398,7 @@ class OAuth2_Storage_Session extends OAuth2_Storage implements SessionInterface
 			'oauth_session_authcode_id' => $oauthSessionAuthCodeId,
 			);
 		$query = $this->select('oauth_session_authcode_scopes', $where)->select('scope_id');
-		return $this->select_results($query);
+		return $this->select_results($query) ?: array();
 	}
 
 	/**
@@ -460,9 +460,10 @@ class OAuth2_Storage_Session extends OAuth2_Storage implements SessionInterface
 		  FROM oauth_session_token_scopes
 		  JOIN oauth_session_access_tokens
 		    ON oauth_session_access_tokens.id = oauth_session_token_scopes.session_access_token_id
-		  JOIN oauth_scopes ON oauth_scopes.id = oauth_session_token_scopes.scope_id
+		  JOIN oauth_scopes
+		    ON oauth_scopes.id = oauth_session_token_scopes.scope_id
 		 WHERE access_token = :accessToken')
 			->param(':accessToken', $accessToken);
-		return $this->select_results($query);
+		return $this->select_results($query) ?: array();
 	}
 }

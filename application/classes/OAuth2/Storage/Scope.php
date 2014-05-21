@@ -49,6 +49,6 @@ class OAuth2_Storage_Scope extends OAuth2_Storage implements ScopeInterface
 			'scope' => $scope,
 			);
 		$query = $this->select('oauth_scopes', $where);
-		return $this->select_results($query);
+		return $this->select_one_result($query);
 	}
 }

@@ -11,7 +11,7 @@
  * @link       http://github.com/php-loep/oauth2-server
  */
 
-use League\OAuth2\Server\Storage\SessionInterface;
+use League\OAuth2\Server\Storage\ClientInterface;
 
 class OAuth2_Storage_Client extends OAuth2_Storage implements ClientInterface
 {
@@ -64,6 +64,12 @@ class OAuth2_Storage_Client extends OAuth2_Storage implements ClientInterface
 
 		if (!$clientSecret AND !$redirectUri)
 			return FALSE;
+
+		if ($redirectUri)
+		{
+			// We do not support mutli-domain redirects
+			$redirectUri = parse_url($redirectUri, PHP_URL_PATH);
+		}
 
 		if ($clientSecret AND $redirectUri)
 		{

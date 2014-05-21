@@ -57,7 +57,7 @@ abstract class OAuth2_Storage {
 			->from($table);
 		if ($where)
 		{
-			$this->apply_where_to_query($where, $query);
+			$this->apply_where_to_query($query, $where);
 		}
 		return $query;
 	}
@@ -75,7 +75,7 @@ abstract class OAuth2_Storage {
 	{
 		$query = DB::update($table)
 			->set($data);
-		$this->apply_where_to_query($where, $query);
+		$this->apply_where_to_query($query, $where);
 		$count = $query->execute($this->db);
 		return $count;
 	}
@@ -83,7 +83,7 @@ abstract class OAuth2_Storage {
 	protected function delete($table, array $where)
 	{
 		$query = DB::delete($table);
-		$this->apply_where_to_query($where, $query);
+		$this->apply_where_to_query($query, $where);
 		$count = $query->execute($this->db);
 		return $count;
 	}
