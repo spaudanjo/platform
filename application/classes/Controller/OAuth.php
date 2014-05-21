@@ -88,4 +88,38 @@ class Controller_OAuth extends Koauth_Controller_OAuth {
 		}
 	}
 
+	/**
+	 * Token Requests
+	 */
+	public function action_post_token()
+	{
+		$server = service('oauth.server.auth');
+
+		try
+		{
+			$response = $server->issueAccessToken();
+		}
+		catch (League\OAuth2\Server\Exception\ClientException $e)
+		{
+
+			// Throw an exception because there was a problem with the client's request
+			$response = array(
+				'error' =>  $server::getExceptionType($e->getCode()),
+				'error_description' => $e->getMessage()
+			);
+			$this->response->headers($server::getExceptionHttpHeaders($server::getExceptionType($e->getCode())));
+		}
+		catch (Exception $e)
+		{
+			// Throw an error when a non-library specific exception has been thrown
+			$response = array(
+				'error' =>  'undefined_error',
+				'error_description' => $e->getMessage()
+			);
+		}
+
+		$this->response->headers('Content-Type', 'application/json');
+		$this->response->body(json_encode($response));
+	}
+
 }
