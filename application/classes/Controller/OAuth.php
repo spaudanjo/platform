@@ -27,43 +27,29 @@ class Controller_OAuth extends Koauth_Controller_OAuth {
 	 */
 	public function action_get_authorize()
 	{
-		// Check for login first?
-		$request = Koauth_OAuth2_Request::createFromRequest($this->request);
-		$response = new OAuth2\Response();
-
-		if (!$this->_oauth2_server->validateAuthorizeRequest($request, $response)) {
-			$this->redirect('user/login');
-		}
-
-		// Don't do oauth response handling
-		$this->_skip_oauth_response = TRUE;
-
 		$auth = A1::instance();
-
-		// Not logged in: rendirect to login
 		if (! $auth->logged_in())
 		{
+			// It is not possible to be authorized without being logged in
 			$this->redirect('user/login' . URL::query(array('from_url' => 'oauth/authorize'. URL::query()), FALSE));
 		}
-		// Logged in: Ask for authorization
-		else
-		{
-			// Load the content template
-			$this->template = $view = View::factory('oauth/authorize')
-				->set('scopes', explode(' ', $this->request->query('scope')))
-				->set('client_id', $this->request->query('client_id'));
 
-			// Load the header/footer/layout
-			$this->header = View::factory($this->header);
-			$this->header->set('logged_in', $auth->logged_in());
-			$this->footer = View::factory($this->footer);
-			$this->layout = View::factory($this->layout)
-				->bind('content', $this->template)
-				->bind('header', $this->header)
-				->bind('footer', $this->footer);
+		// Load the content template
+		$this->template = $view = View::factory('oauth/authorize')
+			->set('scopes', explode(' ', $this->request->query('scope')))
+			->set('client_id', $this->request->query('client_id'))
+			;
 
-			$this->response->body($this->layout->render());
-		}
+		// Load the header/footer/layout
+		$this->header = View::factory($this->header);
+		$this->header->set('logged_in', $auth->logged_in());
+		$this->footer = View::factory($this->footer);
+		$this->layout = View::factory($this->layout)
+			->bind('content', $this->template)
+			->bind('header', $this->header)
+			->bind('footer', $this->footer);
+
+		$this->response->body($this->layout->render());
 	}
 
 	/**
