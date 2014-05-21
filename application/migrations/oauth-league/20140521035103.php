@@ -126,9 +126,11 @@ class Migration_Oauth_league_20140521035103 extends Minion_Migration_Base {
 			'oauth_session_authcode_scopes',
 			);
 
+		$db->query(NULL, 'SET FOREIGN_KEY_CHECKS=0');
 		foreach ($tables as $table)
 		{
 			$db->query(NULL, 'DROP TABLE ' . $db->quote_table($table));
 		}
+		$db->query(NULL, 'SET FOREIGN_KEY_CHECKS=1');
 	}
 }
