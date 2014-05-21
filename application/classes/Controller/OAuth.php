@@ -64,39 +64,34 @@ class Controller_OAuth extends Koauth_Controller_OAuth {
 			$this->redirect('user/login' . URL::query(array('from_url' => 'oauth/authorize'. URL::query()), FALSE));
 		}
 
+		// todo: try/catch for invalid client, scope, or redirect URI
+		$server = service('oauth.server.auth');
+		$params = $server->getGrantType('authorization_code')->checkAuthoriseParams();
+
 		if (!$this->request->post('authorize'))
 		{
 			// todo: this needs to be injected, but it's static. X(
 			$this->redirect(
-				League\OAuth2\Server\Util\RedirectUri::make($this->request->query('redirect_uri'), array(
+				League\OAuth2\Server\Util\RedirectUri::make($params['redirect_uri'], array(
 					'error'         => 'access_denied',
 					'error_message' => $server->getExceptionMessage('access_denied'),
-					'state'         => $this->request->query('state'),
+					'state'         => Arr::get($params, 'state'),
 					))
 				);
 		}
 
-		// todo: try/catch for invalid client, scope, or redirect URI
-		$server = service('oauth.server.auth');
+		// The initial request does not have the user id, we inject it now
+		$params['user_id'] = $auth->get_user()->id;
 
-		// Load the scopes from the server
-		$scopes = explode(' ', $this->request->query('scope'));
-		$scopes = $server->getStorage('scope')->getAllScopes($scopes);
-
-		// Create the authentication parameters
-		$params = array(
-			'grant_type' => 'implicit',
-			'user_id'    => $auth->get_user()->id,
-			'client_id'  => $this->request->query('client_id'),
-			'scopes'     => $scopes,
-			);
-
-		$response = $server->issueAccessToken($params);
+		$code = $server->getGrantType('authorization_code')->newAuthoriseRequest('user', $params['user_id'], $params);
 
 		// Redirect the user back to the client with an authorization code
 		$this->redirect(
 			// todo: this needs to be injected, but it's static. X(
-			League\OAuth2\Server\Util\RedirectUri::make($this->request->query('redirect_uri'), $response)
+			League\OAuth2\Server\Util\RedirectUri::make($params['redirect_uri'], array(
+					'code'  => $code,
+					'state' => Arr::get($params, 'state'),
+				))
 			);
 	}
 

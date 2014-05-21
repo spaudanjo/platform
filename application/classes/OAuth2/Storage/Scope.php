@@ -15,17 +15,6 @@ use League\OAuth2\Server\Storage\ScopeInterface;
 
 class OAuth2_Storage_Scope extends OAuth2_Storage implements ScopeInterface
 {
-	public function getAllScopes(Array $scopes = null)
-	{
-		$where = array();
-		if ($scopes) 
-		{
-			$where['scope'] = $scopes;
-		}
-		$query = $this->select('oauth_scopes', $where);
-		return $this->select_results($query);
-	}
-
 	/**
 	 * Return information about a scope
 	 *
