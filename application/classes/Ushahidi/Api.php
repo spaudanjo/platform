@@ -184,21 +184,21 @@ class Ushahidi_Api extends Controller {
 	 */
 	protected function _check_access()
 	{
-		// Check OAuth2 token is valid and has required scope
-		$request = Koauth_OAuth2_Request::createFromRequest($this->request);
-		$response = new OAuth2\Response();
-		$scopeRequired = $this->_scope_required;
-		if (! $this->_oauth2_server->verifyResourceRequest($request, $response, $scopeRequired)) {
-			// if the scope required is different from what the token allows, this will send a "401 insufficient_scope" error
-			$this->_oauth2_server->processResponse($this->response);
-			return FALSE;
+		$server = service('oauth.server.resource');
+
+		// todo: try/catch League\OAuth2\Server\Exception\InvalidAccessTokenException
+		$server->isValid();
+
+		if ($this->_scope_required AND !$server->hasScope($this->_scope_required))
+		{
+			throw HTTP_Exception::factory('403', 'Token does not have required scope: :scope', array(
+				':scope' => $this->_scope_required,
+				));
 		}
 
-		// Get user from token
-		$token = $this->_oauth2_server->getAccessTokenData($request, $response);
-		$this->user = ORM::factory('User', $token['user_id']);
+		$this->user = ORM::factory('User', $server->getOwnerId());
+		$resource   = $this->resource();
 
-		$resource = $this->resource();
 		// Does the user have required role/permissions ?
 		if (! $this->acl->is_allowed($this->user, $resource, strtolower($this->request->method())) )
 		{
