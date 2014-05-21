@@ -29,6 +29,29 @@ abstract class Ushahidi_Core {
 			return Database::instance();
 		});
 
+		// OAuth servers
+		$di->set('oauth.server.auth', function() use ($di) {
+			$server = $di->newInstance('League\OAuth2\Server\Authorization');
+			$server->addGrantType($di->newInstance('League\OAuth2\Server\Grant\AuthCode'));
+			$server->addGrantType($di->newInstance('League\OAuth2\Server\Grant\Implicit'));
+			$server->addGrantType($di->newInstance('League\OAuth2\Server\Grant\ClientCredentials'));
+			return $server;
+		});
+		$di->set('oauth.server.resource', $di->lazyNew('League\OAuth2\Server\Resource'));
+
+		// Custom storage interfaces for OAuth servers
+		$di->params['League\OAuth2\Server\Authorization'] = [
+			'client'  => $di->lazyNew('OAuth2_Storage_Client'),
+			'session' => $di->lazyNew('OAuth2_Storage_Session'),
+			'scope'   => $di->lazyNew('OAuth2_Storage_Scope'),
+			];
+		$di->params['League\OAuth2\Server\Resource'] = [
+			'session' => $di->lazyNew('OAuth2_Storage_Session'),
+			];
+		$di->params['OAuth2_Storage'] = [
+			'db' => $di->lazyGet('kohana.db'),
+			];
+
 		// Helpers, tools, etc
 		$di->set('tool.hasher.password', $di->lazyNew('Ushahidi_Hasher_Password'));
 		$di->set('tool.authenticator', $di->lazyNew('Ushahidi_Authenticator'));
