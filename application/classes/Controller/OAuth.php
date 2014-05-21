@@ -58,20 +58,46 @@ class Controller_OAuth extends Koauth_Controller_OAuth {
 	public function action_post_authorize()
 	{
 		$auth = A1::instance();
-
-		// Not logged in: rendirect to login
 		if (! $auth->logged_in())
 		{
-			// Redirect for GET request
-			$this->redirect('oauth/authorize' . URL::query());
+			// It is not possible to be authorized without being logged in
+			$this->redirect('user/login' . URL::query(array('from_url' => 'oauth/authorize'. URL::query()), FALSE));
 		}
-		else
+
+		if (!$this->request->post('authorize'))
 		{
-			$user = $auth->get_user();
-			// @todo CSRF validation
-			$authorized = (bool) $this->request->post('authorize');
-			$this->_oauth2_server->handleAuthorizeRequest(Koauth_OAuth2_Request::createFromRequest($this->request), new OAuth2\Response(), $authorized, $user->id);
+			// todo: this needs to be injected, but it's static. X(
+			$this->redirect(
+				League\OAuth2\Server\Util\RedirectUri::make($this->request->query('redirect_uri'), array(
+					'error'         => 'access_denied',
+					'error_message' => $server->getExceptionMessage('access_denied'),
+					'state'         => $this->request->query('state'),
+					))
+				);
 		}
+
+		// todo: try/catch for invalid client, scope, or redirect URI
+		$server = service('oauth.server.auth');
+
+		// Load the scopes from the server
+		$scopes = explode(' ', $this->request->query('scope'));
+		$scopes = $server->getStorage('scope')->getAllScopes($scopes);
+
+		// Create the authentication parameters
+		$params = array(
+			'grant_type' => 'implicit',
+			'user_id'    => $auth->get_user()->id,
+			'client_id'  => $this->request->query('client_id'),
+			'scopes'     => $scopes,
+			);
+
+		$response = $server->issueAccessToken($params);
+
+		// Redirect the user back to the client with an authorization code
+		$this->redirect(
+			// todo: this needs to be injected, but it's static. X(
+			League\OAuth2\Server\Util\RedirectUri::make($this->request->query('redirect_uri'), $response)
+			);
 	}
 
 	/**
@@ -103,9 +129,7 @@ class Controller_OAuth extends Koauth_Controller_OAuth {
 				'error_description' => $e->getMessage()
 			);
 		}
-
 		$this->response->headers('Content-Type', 'application/json');
 		$this->response->body(json_encode($response));
 	}
-
 }

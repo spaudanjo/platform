@@ -28,7 +28,7 @@ abstract class OAuth2_Storage {
 	{
 		foreach ($where as $col => $value)
 		{
-			$query->where($col, '=', $value);
+			$query->where($col, is_array($value) ? 'IN' : '=', $value);
 		}
 		return $query;
 	}
