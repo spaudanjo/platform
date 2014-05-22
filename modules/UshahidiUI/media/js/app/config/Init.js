@@ -15,6 +15,7 @@ require.config(
 	paths :
 	{
 		'jquery' : '../../bower_components/jquery/dist/jquery',
+		'jquery.cookie' : '../../bower_components/jquery.cookie/jquery.cookie',
 		'underscore' : '../../bower_components/lodash/dist/lodash',
 		'backbone' : '../../bower_components/backbone/backbone',
 		'marionette' : '../../bower_components/backbone.marionette/lib/backbone.marionette',
@@ -128,7 +129,7 @@ require.config(
 });
 
 // Includes Desktop Specific JavaScript files here (or inside of your Desktop router)
-require(['App', 'routers/AppRouter', 'controllers/Controller', 'jquery', 'ddt'],
+require(['App', 'routers/AppRouter', 'controllers/Controller', 'jquery', 'ddt', 'jquery.cookie'],
 	function(App, AppRouter, Controller, $)
 	{
 		App.appRouter = new AppRouter(
