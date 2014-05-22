@@ -41,9 +41,9 @@ abstract class Ushahidi_Core {
 
 		// Custom storage interfaces for OAuth servers
 		$di->params['League\OAuth2\Server\Authorization'] = [
-			'client'  => $di->lazyNew('OAuth2_Storage_Client'),
-			'session' => $di->lazyNew('OAuth2_Storage_Session'),
-			'scope'   => $di->lazyNew('OAuth2_Storage_Scope'),
+			'client'  => $di->lazyGet('repository.oauth.client'),
+			'session' => $di->lazyGet('repository.oauth.session'),
+			'scope'   => $di->lazyGet('repository.oauth.scope'),
 			];
 		$di->params['League\OAuth2\Server\Resource'] = [
 			'session' => $di->lazyNew('OAuth2_Storage_Session'),
@@ -71,6 +71,9 @@ abstract class Ushahidi_Core {
 		$di->set('repository.config', $di->lazyNew('Ushahidi_Repository_Config'));
 		$di->set('repository.contact', $di->lazyNew('Ushahidi_Repository_Contact'));
 		$di->set('repository.user', $di->lazyNew('Ushahidi_Repository_User'));
+		$di->set('repository.oauth.client', $di->lazyNew('OAuth2_Storage_Client'));
+		$di->set('repository.oauth.session', $di->lazyNew('OAuth2_Storage_Session'));
+		$di->set('repository.oauth.scope', $di->lazyNew('OAuth2_Storage_Scope'));
 
 		// Abstract repository parameters
 		$di->params['Ushahidi_Repository'] = [
