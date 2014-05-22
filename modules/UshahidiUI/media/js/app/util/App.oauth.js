@@ -10,89 +10,48 @@
 define(['backbone', 'jso2/jso2', 'jquery', 'underscore'],
 	function(Backbone, Jso2, $, _)
 	{
-		var jso_state_exceptions = [
-				'Could not retrieve state',
-				'Could not get providerid from state',
-				'Could not retrieve OAuth.instances for this provider.'
-			],
-		ushahidi_auth = {
+		var ushahidi_auth = {
 			initialize : function ()
 			{
-				var that = this,
-					token;
+				// this treats the user secret for the ui client as a pubkey
+				var user_client = $.cookie('oauthclient'),
+					user_secret = $.cookie('oauthsecret'),
+					token = Jso2.store.getToken('ushahidi_user'),
+					anonymous_config = {
+						client_id: window.config.oauth.client,
+						client_secret: window.config.oauth.client_secret,
+						// no authorization required for client_credentials
+						token: window.config.baseurl + 'oauth/token',
+						redirect_uri: window.config.baseurl,
+						scopes: {
+							request: ['posts', 'media', 'forms', 'api', 'tags', 'sets', 'users', 'config', 'messages'],
+							require: ['posts', 'media', 'forms', 'api', 'tags', 'sets', 'users']
+						},
+						grant_type: 'client_credentials'
+					},
+					user_config = {};
 
-				_.bindAll(this, 'setProvider', 'login', 'logout', 'ajax');
+				_.bindAll(this, 'setProvider', 'logout', 'ajax');
 
 				Jso2.enablejQuery($);
 
 				this.providers = {};
 				this.provider = null;
 
-				this.providers.client_credentials = new Jso2('ushahidi_client_credentials', {
-					client_id: window.config.oauth.client,
-					client_secret: window.config.oauth.client_secret,
-					//authorization: window.config.baseurl + 'oauth/authorize',
-					token: window.config.baseurl + 'oauth/token',
-					redirect_uri: window.config.baseurl,
-					scopes: {
-						request: ['posts', 'media', 'forms', 'api', 'tags', 'sets', 'users', 'config', 'messages'],
-						require: ['posts', 'media', 'forms', 'api', 'tags', 'sets', 'users']
-					},
-					grant_type: 'client_credentials'
-				});
+				this.providers.anonymous = new Jso2('ushahidi_anonymous', anonymous_config);
 
-				this.providers.implicit = new Jso2('ushahidi_implicit', {
-					client_id: window.config.oauth.client,
-					//client_secret: window.config.oauth.client_secret,
-					authorization: window.config.baseurl + 'oauth/authorize',
-					//token: window.config.baseurl + 'oauth/token',
-					redirect_uri: window.config.baseurl,
-					scopes: {
-						request: ['posts', 'media', 'forms', 'api', 'tags', 'sets', 'users', 'config', 'messages'],
-						require: ['posts', 'media', 'forms', 'api', 'tags', 'sets', 'users']
-					},
-					grant_type: 'implicit'
-				});
-
-				// Do we already have a logged in token?
-				token = Jso2.store.getToken('ushahidi_implicit');
-				if (token)
+				if (user_secret)
 				{
-					that.setProvider('implicit');
-				}
-				// Default to client_credentials grant type
-				else
-				{
-					this.setProvider('client_credentials');
+					user_config = _.extend({}, anonymous_config, {
+						client_id: user_client,
+						client_secret: user_secret
+						// todo: user should have different scoping
+						});
+					this.providers.user = new Jso2('ushahidi_user', user_config);
 				}
 
-				try
-				{
-					// Check for callback from implicit flow
-					this.providers.implicit.callback(false, function()
-					{
-						// Check if we have tokens
-						var token = Jso2.store.getTokens('ushahidi_implicit');
-						if (token.length > 0)
-						{
-							that.setProvider('implicit');
-						}
-					});
-				}
-				catch (e)
-				{
-					// Just log error on missing state
-					if (_.contains(jso_state_exceptions, e))
-					{
-						console.warn('Exception: ' + e);
-					}
-					// Propogate any other errors
-					else
-					{
-						throw e;
-					}
-				}
-
+				// If user credentials are not available, use anonymous access.
+				this.setProvider((user_secret && token) ? 'user' : 'anonymous');
 
 				// Override backbone AJAX with our AJAX switcher
 				Backbone.ajax = this.ajax;
@@ -123,20 +82,13 @@ define(['backbone', 'jso2/jso2', 'jquery', 'underscore'],
 				return headers;
 			},
 			/**
-			 * Login: Trigger login via implicit flow
-			 */
-			login : function ()
-			{
-				return this.setProvider('implicit');
-			},
-			/**
-			 * Logout: Switch back to anonymous (client credentials)
+			 * Logout: Switch back to anonymous
 			 */
 			logout : function ()
 			{
-				var xhr = this.setProvider('client_credentials');
+				var xhr = this.setProvider('anonymous');
 				this.currentToken = null;
-				this.providers.implicit.wipeTokens();
+				this.providers.user.wipeTokens();
 				// Redirect to /user/logout
 				window.location = window.config.baseurl + 'user/logout?from_url=/';
 				return xhr;
