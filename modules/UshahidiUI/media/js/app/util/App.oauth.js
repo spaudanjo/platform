@@ -10,7 +10,9 @@
 define(['backbone', 'jso2/jso2', 'jquery', 'underscore'],
 	function(Backbone, Jso2, $, _)
 	{
-		var ushahidi_auth = {
+		var required_scopes = ['posts', 'media', 'forms', 'api', 'tags', 'sets', 'users'],
+			all_scopes = required_scopes.concat(['config', 'messages']),
+			ushahidi_auth = {
 			initialize : function ()
 			{
 				// this treats the user secret for the ui client as a pubkey
@@ -21,8 +23,8 @@ define(['backbone', 'jso2/jso2', 'jquery', 'underscore'],
 						token: window.config.baseurl + 'oauth/token',
 						redirect_uri: window.config.baseurl,
 						scopes: {
-							request: ['posts', 'media', 'forms', 'api', 'tags', 'sets', 'users', 'config', 'messages'],
-							require: ['posts', 'media', 'forms', 'api', 'tags', 'sets', 'users']
+							request: all_scopes,
+							require: required_scopes
 						},
 						grant_type: 'client_credentials'
 					};
@@ -64,6 +66,17 @@ define(['backbone', 'jso2/jso2', 'jquery', 'underscore'],
 					headers.Authorization = 'Bearer ' + this.currentToken.access_token;
 				}
 				return headers;
+			},
+			/**
+			 * Get auth code parameters.
+			 */
+			getAuthCodeParams : function() {
+				return {
+					response_type: 'code',
+					client_id: window.config.oauth.client,
+					redirect_uri: window.config.baseurl + 'user/oauth',
+					scope: all_scopes.join(' ')
+				};
 			},
 			/**
 			 * Call the appropriate ajax function based on provider
