@@ -89,7 +89,7 @@ class OAuth2_Storage_Client extends OAuth2_Storage implements ClientInterface
 			->param(':clientSecret', $clientSecret)
 			->param(':redirectUri', $redirectUri);
 
-		return $this->select_results($query);
+		return $this->select_one_result($query);
 	}
 
 	private function query_secret_and_redirect_uri($clientId, $clientSecret, $redirectUri)
