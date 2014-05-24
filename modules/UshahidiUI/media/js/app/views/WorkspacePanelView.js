@@ -82,9 +82,9 @@ define(['underscore', 'marionette', 'handlebars', 'App', 'text!templates/Workspa
 			},
 			logout : function(e)
 			{
-				e.preventDefault();
-				App.vent.trigger('logout');
-				App.vent.trigger('workspace:toggle', true);
+				if (!window.confirm('Are you sure you want to log out?')) {
+					e.preventDefault();
+				}
 			},
 			editUser : function(e) {
 				e.preventDefault();
