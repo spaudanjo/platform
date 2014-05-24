@@ -151,6 +151,20 @@ class Controller_User extends Controller_Layout {
 		}
 	}
 
+	public function action_oauth()
+	{
+		$code = $this->request->query('code');
+		if (!$this->auth->logged_in() OR !$code)
+		{
+			$this->redirect('oauth' . URL::query());
+		}
+
+		// Store the auth code in a cookie for the JS app
+		Cookie::set('authtoken', $code);
+
+		$this->redirect('/');
+	}
+
 	public function action_logout()
 	{
 		$this->auth->logout();

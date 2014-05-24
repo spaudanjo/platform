@@ -1,77 +1,86 @@
 <?php defined('SYSPATH') OR die('No direct access allowed.');
 
-class Controller_OAuth extends Koauth_Controller_OAuth {
+use League\OAuth2\Server\Exception\ClientException as OAuthClientException;
 
-	/**
-	 * @var  View  page template
-	 */
-	public $template = 'template';
+class Controller_OAuth extends Controller_Layout {
 
-	/**
-	 * @var  View  page layout template
-	 */
-	public $layout = 'layout';
+	public $template = 'oauth/authorize';
 
-	/**
-	 * @var  View  page header template
-	 */
-	public $header = 'header';
+	private $auth;
+	private $user;
+	private $session;
 
-	/**
-	 * @var  View  page footer template
-	 */
-	public $footer = 'footer';
-
-	/**
-	 * Authorize Requests
-	 */
-	public function action_get_authorize()
+	public function before()
 	{
-		$auth = A1::instance();
-		if (! $auth->logged_in())
+		$action = $this->request->action();
+		if ($action AND !in_array($action, array('index', 'authorize')))
 		{
-			// It is not possible to be authorized without being logged in
-			$this->redirect('user/login' . URL::query(array('from_url' => 'oauth/authorize'. URL::query()), FALSE));
+			// Only apply templating to index and authorization actions
+			$this->auto_render = FALSE;
 		}
 
-		// Load the content template
-		$this->template = $view = View::factory('oauth/authorize')
-			->set('scopes', explode(' ', $this->request->query('scope')))
-			->set('client_id', $this->request->query('client_id'))
-			;
+		parent::before();
 
-		// Load the header/footer/layout
-		$this->header = View::factory($this->header);
-		$this->header->set('logged_in', $auth->logged_in());
-		$this->footer = View::factory($this->footer);
-		$this->layout = View::factory($this->layout)
-			->bind('content', $this->template)
-			->bind('header', $this->header)
-			->bind('footer', $this->footer);
+		$this->auth    = A1::instance();
+		$this->user    = $this->auth->get_user();
+		$this->session = $this->auth->session();
 
-		$this->response->body($this->layout->render());
+		if ($this->auto_render)
+		{
+			$this->header->set('logged_in', $this->auth->logged_in());
+		}
 	}
 
-	/**
-	 * Authorize Requests
-	 */
-	public function action_post_authorize()
+	public function action_index()
 	{
-		$auth = A1::instance();
-		if (! $auth->logged_in())
-		{
-			// It is not possible to be authorized without being logged in
-			$this->redirect('user/login' . URL::query(array('from_url' => 'oauth/authorize'. URL::query()), FALSE));
-		}
-
-		// todo: try/catch for invalid client, scope, or redirect URI
+		// todo: try/catch OAuthClientException
 		$server = service('oauth.server.auth');
 		$params = $server->getGrantType('authorization_code')->checkAuthoriseParams();
 
-		if (!$this->request->post('authorize'))
+		$this->session->set('oauth', $params);
+
+		if (!$this->user)
 		{
-			// todo: this needs to be injected, but it's static. X(
+			$this->redirect('user/login' . URL::query(array('from_url' => 'oauth/authorize'. URL::query()), FALSE));
+		}
+
+		$this->redirect('oauth/authorize' . URL::query($params));
+	}
+
+	public function action_authorize()
+	{
+		if (!$this->user)
+		{
+			// Not possible to authorize until login is finished, go back to index
+			// to restart the flow.
+			return $this->action_index();
+		}
+
+		$server = service('oauth.server.auth');
+		$params = $this->session->get('oauth');
+
+		if ($this->request->post('approve') OR !empty($params['client_details']['auto_approve']))
+		{
+			// user id has not been injected into the parameters, do it now
+			$params['user_id'] = $this->user->id;
+
+			$code = $server->getGrantType('authorization_code')->newAuthoriseRequest('user', $params['user_id'], $params);
+
+			// Redirect the user back to the client with an authorization code
 			$this->redirect(
+				// todo: this needs to be injected, but it's static. X(
+				League\OAuth2\Server\Util\RedirectUri::make($params['redirect_uri'], array(
+						'code'  => $code,
+						'state' => Arr::get($params, 'state'),
+					))
+				);
+		}
+
+		if ($this->request->post('deny'))
+		{
+			// Redirect the user back to the client with an error
+			$this->redirect(
+				// todo: this needs to be injected, but it's static. X(
 				League\OAuth2\Server\Util\RedirectUri::make($params['redirect_uri'], array(
 					'error'         => 'access_denied',
 					'error_message' => $server->getExceptionMessage('access_denied'),
@@ -80,25 +89,14 @@ class Controller_OAuth extends Koauth_Controller_OAuth {
 				);
 		}
 
-		// The initial request does not have the user id, we inject it now
-		$params['user_id'] = $auth->get_user()->id;
-
-		$code = $server->getGrantType('authorization_code')->newAuthoriseRequest('user', $params['user_id'], $params);
-
-		// Redirect the user back to the client with an authorization code
-		$this->redirect(
-			// todo: this needs to be injected, but it's static. X(
-			League\OAuth2\Server\Util\RedirectUri::make($params['redirect_uri'], array(
-					'code'  => $code,
-					'state' => Arr::get($params, 'state'),
-				))
-			);
+		// Load the content template
+		$this->template = $view = View::factory('oauth/authorize')
+			->set('scopes', Arr::pluck($params['scopes'], 'name'))
+			->set('client', $params['client_details']['name'])
+			;
 	}
 
-	/**
-	 * Token Requests
-	 */
-	public function action_post_token()
+	public function action_token()
 	{
 		$server = service('oauth.server.auth');
 
@@ -106,12 +104,12 @@ class Controller_OAuth extends Koauth_Controller_OAuth {
 		{
 			$response = $server->issueAccessToken();
 		}
-		catch (League\OAuth2\Server\Exception\ClientException $e)
+		catch (OAuthClientException $e)
 		{
 
 			// Throw an exception because there was a problem with the client's request
 			$response = array(
-				'error' =>  $server::getExceptionType($e->getCode()),
+				'error' => $server::getExceptionType($e->getCode()),
 				'error_description' => $e->getMessage()
 			);
 			$this->response->headers($server::getExceptionHttpHeaders($server::getExceptionType($e->getCode())));
