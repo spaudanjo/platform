@@ -85,11 +85,6 @@ class Ushahidi_Api extends Controller {
 	protected $_record_allowed_orderby = array('id');
 
 	/**
-	 * @var OAuth2\Server
-	 */
-	protected $_oauth2_server;
-
-	/**
 	 * @var string oauth2 scope required for access
 	 */
 	protected $_scope_required = 'undefined';
@@ -112,8 +107,6 @@ class Ushahidi_Api extends Controller {
 		Kohana_Exception::$error_view = 'error/api';
 		Kohana_Exception::$error_layout = FALSE;
 		HTTP_Exception_404::$error_view = 'error/api';
-
-		$this->_oauth2_server = new Koauth_OAuth2_Server();
 
 		$this->acl  = A2::instance();
 		$this->auth = $this->acl->auth();
@@ -176,6 +169,18 @@ class Ushahidi_Api extends Controller {
 	}
 
 	/**
+	 * Get the request access method
+	 *
+	 * Allows controllers to customize how different methods are treated.
+	 *
+	 * @return string
+	 */
+	protected function _get_access_method()
+	{
+		return strtolower($this->request->method());
+	}
+
+	/**
 	 * Check if access is allowed
 	 * Checks if oauth token and user permissions
 	 *
@@ -198,9 +203,10 @@ class Ushahidi_Api extends Controller {
 
 		$this->user = ORM::factory('User', $server->getOwnerId());
 		$resource   = $this->resource();
+		$method     = $this->_get_access_method();
 
 		// Does the user have required role/permissions ?
-		if (! $this->acl->is_allowed($this->user, $resource, strtolower($this->request->method())) )
+		if (! $this->acl->is_allowed($this->user, $resource, $method) )
 		{
 			// @todo proper message
 			if (isset($resource->id))
