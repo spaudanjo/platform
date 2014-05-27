@@ -10,6 +10,26 @@
 define(['backbone', 'jso2/jso2', 'jquery', 'underscore'],
 	function(Backbone, Jso2, $, _)
 	{
+		function getStoredValue(key)
+		{
+			if (!window.localStorage) {
+				return false;
+			}
+			var value = window.localStorage.getItem(key);
+			ddt.log('OAuth', 'got stored value', key, value);
+			return value;
+		}
+
+		function setStoredValue(key, value)
+		{
+			if (!window.localStorage) {
+				return false;
+			}
+			window.localStorage.setItem(key, value);
+			ddt.log('OAuth', 'set stored value', key, value);
+			return true;
+		}
+
 		function getUserToken() {
 			var cookie = $.cookie('authtoken'),
 				token;
@@ -42,19 +62,26 @@ define(['backbone', 'jso2/jso2', 'jquery', 'underscore'],
 					success: function(data) {
 						ddt.log('OAuth', 'got anonymous token', data.access_token);
 					}
+				})
+				.done(function(data)
+				{
+					// this only needs to run once
+					anonymous_token = data.access_token;
+					setStoredValue(ANONYMOUS_TOKEN_NAME, anonymous_token);
 				});
 			} else {
 				ddt.log('OAuth', 'still fetching anonymous token');
 			}
 
-			return anonymous_token_request.done(function(data)
+			return anonymous_token_request.done(function()
 			{
-				anonymous_token = data.access_token;
+				// got a token, continue processing
 				callback.call(this, anonymous_token);
 			});
 		}
 
-		var anonymous_token,
+		var ANONYMOUS_TOKEN_NAME = 'ushahidi_anonymous_access_token',
+			anonymous_token = getStoredValue(ANONYMOUS_TOKEN_NAME),
 			anonymous_token_request,
 			user_token = getUserToken(),
 			required_scopes = ['posts', 'media', 'forms', 'api', 'tags', 'sets', 'users'],
