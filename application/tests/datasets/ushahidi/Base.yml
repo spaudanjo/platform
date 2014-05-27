@@ -591,21 +591,28 @@ tasks:
 # OAuth Tables
 oauth_clients:
   -
+    id: "demoapp"
+    secret: "demopass"
+    name: ""
+  -
+    id: "restricted_app"
+    secret: "demopass"
+    name: ""
+  -
+    id: "ushahidiui"
+    secret: "35e7f0bca957836d05ca0492211b0ac707671261"
+    name: ""
+oauth_client_endpoints:
+  -
+    client_id: "ushahidiui"
+    redirect_uri: "/"
+  -
     client_id: "demoapp"
-    client_secret: "demopass"
-    grant_types: ""
     redirect_uri: "http://ushv3.dev/"
   -
     client_id: "restricted_app"
-    client_secret: "demopass"
-    grant_types: '["authorization_code"]'
     redirect_uri: "http://ushv3.dev/"
-  -
-    client_id: "ushahidiui"
-    client_secret: "35e7f0bca957836d05ca0492211b0ac707671261"
-    grant_types: ""
-    redirect_uri: "/"
-oauth_access_tokens:
+oauth_session_access_tokens:
   -
     access_token: "testingtoken"
     client_id: "demoapp"
@@ -642,7 +649,7 @@ oauth_access_tokens:
     scope: "api posts forms sets tags users media config messages dataproviders"
     expires: "2030-01-01 00:00:00"
     user_id:
-oauth_authorization_codes:
+oauth_session_authcodes:
   -
     authorization_code: "4d105df9a7f8645ef8306dd40c7b1952794bf368"
     client_id: "demoapp"
@@ -655,7 +662,7 @@ oauth_authorization_codes:
     scope: "api"
     expires: "2030-01-01 00:00:00"
     redirect_uri: "http://ushv3.dev/"
-oauth_refresh_tokens:
+oauth_session_refresh_tokens:
   -
     refresh_token: "5a846f5351a46fc9bdd5b8f55224b51671cf8b8f"
     client_id: "demoapp"
