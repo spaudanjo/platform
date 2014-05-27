@@ -21,13 +21,11 @@ define(['marionette', 'handlebars', 'App', 'jquery', 'text!templates/Header.html
 				//App.vent.on('page:change', this.updateActiveNav, this);
 				App.vent.on('views:change', this.updateActiveView, this);
 				App.vent.on('config:change', this.render, this);
-				App.vent.on('logout', this.render, this);
 			},
 			events : {
 				'click .js-views-menu-link' : 'showViewsMenu',
 				'click .js-create-post' : 'showCreatePost',
 				'click .js-workspace-toggle' : 'triggerWorkspaceToggle',
-				// 'click .js-login' : 'login'
 			},
 			triggerWorkspaceToggle : function (e)
 			{
@@ -82,11 +80,6 @@ define(['marionette', 'handlebars', 'App', 'jquery', 'text!templates/Header.html
 					logged_in : App.loggedin(),
 					login_url : window.config.baseurl + 'oauth?' + $.param(App.oauth.getAuthCodeParams())
 				};
-			},
-			login : function(e)
-			{
-				e.preventDefault();
-				App.vent.trigger('login');
 			}
 		});
 	});

@@ -18,7 +18,7 @@ define(['underscore', 'marionette', 'handlebars', 'App', 'text!templates/Workspa
 			},
 			events : {
 				'click .js-title' : 'toggleSection',
-				'click .js-logout' : 'logout',
+				'click .js-logout' : 'confirmLogout',
 				'click .js-edit-profile' : 'editUser'
 			},
 			initialize : function ()
@@ -80,7 +80,7 @@ define(['underscore', 'marionette', 'handlebars', 'App', 'text!templates/Workspa
 				// Close workspace panel
 				App.vent.trigger('workspace:toggle', true);
 			},
-			logout : function(e)
+			confirmLogout : function(e)
 			{
 				if (!window.confirm('Are you sure you want to log out?')) {
 					e.preventDefault();
