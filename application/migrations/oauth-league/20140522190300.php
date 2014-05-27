@@ -25,7 +25,7 @@ class Migration_Oauth_league_20140522190300 extends Minion_Migration_Base {
 
 		$query = DB::insert('oauth_client_endpoints')
 			->columns(array('client_id', 'redirect_uri'))
-			->values(array($client['client'], '/'));
+			->values(array($client['client'], '/user/oauth'));
 		$query->execute($db);
 	}
 
