@@ -100,30 +100,19 @@ class Controller_OAuth extends Controller_Layout {
 	{
 		$server = service('oauth.server.auth');
 
-		if ($this->request->body() AND !$this->request->post())
-		{
-			// This hack is required for Behat/Mink testing, which does not send
-			// the correct `Content-Type: application/x-www-form-urlencoded` header,
-			// which makes PHP skip trying to parse the body into $_POST.
-			parse_str($this->request->body(), $params);
-		}
-		else
-		{
-			$params = $this->request->post();
-		}
-
 		try
 		{
-			$response = $server->issueAccessToken($params);
+			$response = $server->issueAccessToken($this->request->post());
 		}
 		catch (OAuthClientException $e)
 		{
-
 			// Throw an exception because there was a problem with the client's request
 			$response = array(
 				'error' => $server::getExceptionType($e->getCode()),
 				'error_description' => $e->getMessage()
 			);
+			// Auth server returns an indexed array of headers, along with the server
+			// status as a header, which must be converted to use with Kohana.
 			$headers = $server::getExceptionHttpHeaders($server::getExceptionType($e->getCode()));
 			foreach ($headers as $header)
 			{

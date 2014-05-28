@@ -29,6 +29,7 @@ Feature: Testing OAuth2 endpoints
 
     Scenario: Requesting access token with password
         Given that I want to make a new "access_token"
+        And that the request "Content-Type" header is "application/x-www-form-urlencoded"
         And that the request "data" is:
         """
           grant_type=password&client_id=demoapp&client_secret=demopass&username=robbie&password=testing
@@ -41,6 +42,7 @@ Feature: Testing OAuth2 endpoints
 
     Scenario: Requesting access token with incorrect password fails
         Given that I want to make a new "access_token"
+        And that the request "Content-Type" header is "application/x-www-form-urlencoded"
         And that the request "data" is:
         """
           grant_type=password&client_id=demoapp&client_secret=demopass&username=robbie&password=wrongpassword
@@ -53,6 +55,7 @@ Feature: Testing OAuth2 endpoints
 
     Scenario: Requesting access token with client credentials
         Given that I want to make a new "access_token"
+        And that the request "Content-Type" header is "application/x-www-form-urlencoded"
         And that the request "data" is:
         """
           grant_type=client_credentials&client_id=demoapp&client_secret=demopass
