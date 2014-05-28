@@ -100,9 +100,21 @@ class Controller_OAuth extends Controller_Layout {
 	{
 		$server = service('oauth.server.auth');
 
+		if ($this->request->body() AND !$this->request->post())
+		{
+			// This hack is required for Behat/Mink testing, which does not send
+			// the correct `Content-Type: application/x-www-form-urlencoded` header,
+			// which makes PHP skip trying to parse the body into $_POST.
+			parse_str($this->request->body(), $params);
+		}
+		else
+		{
+			$params = $this->request->post();
+		}
+
 		try
 		{
-			$response = $server->issueAccessToken($this->request->post());
+			$response = $server->issueAccessToken($params);
 		}
 		catch (OAuthClientException $e)
 		{

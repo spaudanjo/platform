@@ -33,11 +33,19 @@ abstract class Ushahidi_Core {
 		$di->set('oauth.server.auth', function() use ($di) {
 			$server = $di->newInstance('League\OAuth2\Server\Authorization');
 			$server->addGrantType($di->newInstance('League\OAuth2\Server\Grant\AuthCode'));
-			$server->addGrantType($di->newInstance('League\OAuth2\Server\Grant\Implicit'));
+			$server->addGrantType($di->newInstance('League\OAuth2\Server\Grant\Password'));
 			$server->addGrantType($di->newInstance('League\OAuth2\Server\Grant\ClientCredentials'));
 			return $server;
 		});
 		$di->set('oauth.server.resource', $di->lazyNew('League\OAuth2\Server\Resource'));
+
+		// Custom password authenticator
+		$di->setter['League\OAuth2\Server\Grant\Password']['setVerifyCredentialsCallback'] = function($username, $password) {
+			$usecase = service('usecase.user.login');
+			// todo: parse this? inject it?
+			$data    = new Ushahidi\Usecase\User\LoginData(compact('username', 'password'));
+			return $usecase->interact($data);
+		};
 
 		// Custom storage interfaces for OAuth servers
 		$di->params['League\OAuth2\Server\Authorization'] = [
