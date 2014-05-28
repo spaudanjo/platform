@@ -2,7 +2,7 @@
 Feature: Testing OAuth2 endpoints
 
     Scenario: Requesting an Authorization code
-        Given I am on "oauth/authorize?response_type=code&client_id=demoapp&state=testing&scope=api" with redirection
+        Given I am on "oauth/authorize?response_type=code&client_id=demoapp&redirect_uri=/&state=testing&scope=api" with redirection
         When I fill in "login-username" with "robbie"
         And I fill in "login-password" with "testing"
         And I press "login-submit"
@@ -11,25 +11,21 @@ Feature: Testing OAuth2 endpoints
         Then the redirect location should match "\?code=.*&state=testing"
 
     Scenario: Cancelled request for an Authorization code
-        Given I am on "oauth/authorize?response_type=code&client_id=demoapp&state=testing&scope=api" with redirection
+        Given I am on "oauth/authorize?response_type=code&client_id=demoapp&redirect_uri=/&state=testing&scope=api" with redirection
         When I fill in "login-username" with "robbie"
         And I fill in "login-password" with "testing"
         And I press "login-submit"
         And I press "cancelButton" without redirection
         Then the response status code should be 302
-        Then the redirect location should match "\?error=access_denied&error_description=.*&state=testing"
+        Then the redirect location should match "\?error=access_denied&error_message=.*&state=testing"
 
     Scenario: Requesting access token with authorization code
-        Given that I want to make a new "access_token"
-        And that the request "data" is:
-        """
-          code=4d105df9a7f8645ef8306dd40c7b1952794bf368&grant_type=authorization_code&client_id=demoapp&client_secret=demopass&redirect_uri=http://ushv3.dev/
-        """
-        And that the api_url is ""
-        Then I request "oauth/token"
-        Then the response is JSON
-        And the response has a "access_token" property
-        Then the guzzle status code should be 200
+        Given I am on "oauth/authorize?response_type=code&client_id=ushahidiui&redirect_uri=/user/oauth&state=testing&scope=api" with redirection
+        When I fill in "login-username" with "robbie"
+        And I fill in "login-password" with "testing"
+        And I press "login-submit"
+        Then I press "authorizeButton"
+        Then I should have cookie "authtoken"
 
     Scenario: Requesting access token with password
         Given that I want to make a new "access_token"
