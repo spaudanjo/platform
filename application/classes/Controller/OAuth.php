@@ -145,6 +145,7 @@ class Controller_OAuth extends Controller_Layout {
 				'error' =>  'undefined_error',
 				'error_description' => $e->getMessage()
 			);
+			$this->response->status(400);
 		}
 		$this->response->headers('Content-Type', 'application/json');
 		$this->response->body(json_encode($response));

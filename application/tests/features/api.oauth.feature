@@ -48,8 +48,8 @@ Feature: Testing OAuth2 endpoints
         And that the api_url is ""
         Then I request "oauth/token"
         Then the response is JSON
-        And the "error" property equals "invalid_grant"
-        Then the guzzle status code should be 401
+        And the "error" property equals "invalid_request"
+        Then the guzzle status code should be 400
 
     Scenario: Requesting access token with client credentials
         Given that I want to make a new "access_token"

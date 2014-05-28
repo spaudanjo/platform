@@ -44,7 +44,14 @@ abstract class Ushahidi_Core {
 			$usecase = service('usecase.user.login');
 			// todo: parse this? inject it?
 			$data    = new Ushahidi\Usecase\User\LoginData(compact('username', 'password'));
-			return $usecase->interact($data);
+			try
+			{
+				return $usecase->interact($data);
+			}
+			catch (Exception $e)
+			{
+				return false;
+			}
 		};
 
 		// Custom storage interfaces for OAuth servers
