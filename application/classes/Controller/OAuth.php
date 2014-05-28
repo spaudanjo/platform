@@ -112,7 +112,19 @@ class Controller_OAuth extends Controller_Layout {
 				'error' => $server::getExceptionType($e->getCode()),
 				'error_description' => $e->getMessage()
 			);
-			$this->response->headers($server::getExceptionHttpHeaders($server::getExceptionType($e->getCode())));
+			$headers = $server::getExceptionHttpHeaders($server::getExceptionType($e->getCode()));
+			foreach ($headers as $header)
+			{
+				if (preg_match('#^HTTP/1.1 (\d{3})#', $header, $matches))
+				{
+					$this->response->status($matches[1]);
+				}
+				else
+				{
+					list($name, $value) = explode(': ', $header);
+					$this->response->header($name, $value);
+				}
+			}
 		}
 		catch (Exception $e)
 		{
