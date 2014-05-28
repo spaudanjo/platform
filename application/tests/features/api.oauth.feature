@@ -75,15 +75,6 @@ Feature: Testing OAuth2 endpoints
         And the response has a "access_token" property
         Then the guzzle status code should be 200
 
-    Scenario: Requesting an access token with implicit flow
-        Given I am on "oauth/authorize?response_type=token&client_id=demoapp&state=testing&scope=api" with redirection
-        When I fill in "login-username" with "robbie"
-        And I fill in "login-password" with "testing"
-        And I press "login-submit"
-        And I press "authorizeButton" without redirection
-        Then the response status code should be 302
-        Then the redirect location should match "\#access_token=.*&expires_in=[0-9]*&token_type=Bearer&scope=api&state=testing"
-
     Scenario: Authorized Posts Request
         Given that I want to update a "Post"
         And that its "id" is "95"
