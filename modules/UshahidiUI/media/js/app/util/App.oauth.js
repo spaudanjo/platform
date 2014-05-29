@@ -7,8 +7,8 @@
  * @license    https://www.gnu.org/licenses/agpl-3.0.html GNU Affero General Public License Version 3 (AGPL3)
  */
 
-define(['backbone', 'jso2/jso2', 'jquery', 'underscore'],
-	function(Backbone, Jso2, $, _)
+define(['backbone', 'jquery', 'underscore'],
+	function(Backbone, $, _)
 	{
 		function getStoredValue(key)
 		{
