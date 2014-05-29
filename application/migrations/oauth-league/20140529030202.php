@@ -1,6 +1,6 @@
 <?php defined('SYSPATH') OR die('No direct script access.');
 
-class Migration_Oauth_league_20140522190300 extends Minion_Migration_Base {
+class Migration_Oauth_league_20140529030202 extends Minion_Migration_Base {
 
 	/**
 	 * Run queries needed to apply this migration
