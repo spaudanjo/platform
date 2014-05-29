@@ -66,6 +66,7 @@ Feature: Testing OAuth2 endpoints
         And the response has a "access_token" property
         Then the guzzle status code should be 200
 
+    @resetFixture
     Scenario: Authorized Posts Request
         Given that I want to update a "Post"
         And that its "id" is "95"
@@ -109,7 +110,8 @@ Feature: Testing OAuth2 endpoints
         """
         When I request "/posts"
         Then the response is JSON
-        Then the guzzle status code should be 401
+        And the response has an "errors" property
+        Then the guzzle status code should be 400
 
     Scenario: Unauthorized Posts Request (invalid token)
         Given that I want to update a "Post"
@@ -125,9 +127,8 @@ Feature: Testing OAuth2 endpoints
         """
         When I request "/posts"
         Then the response is JSON
-        And the response has an "error" property
-        And the "error" property equals "invalid_token"
-        Then the guzzle status code should be 401
+        And the response has an "errors" property
+        Then the guzzle status code should be 400
 
 # Tests for client with restricted grant types: authorization_code only!
 

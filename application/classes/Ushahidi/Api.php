@@ -191,8 +191,17 @@ class Ushahidi_Api extends Controller {
 	{
 		$server = service('oauth.server.resource');
 
-		// todo: try/catch League\OAuth2\Server\Exception\InvalidAccessTokenException
-		$server->isValid();
+		// Using an "Authorization: Bearer xyz" header is required, except for GET requests
+		$require_header = $this->request->method() !== Request::GET;
+
+		try
+		{
+			$server->isValid($require_header);
+		}
+		catch (League\OAuth2\Server\Exception\InvalidAccessTokenException $e)
+		{
+			throw HTTP_Exception::factory('400', $e->getMessage());
+		}
 
 		if ($this->_scope_required AND !$server->hasScope($this->_scope_required))
 		{
