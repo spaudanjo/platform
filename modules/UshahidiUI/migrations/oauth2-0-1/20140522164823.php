@@ -9,26 +9,7 @@ class Migration_Oauth2_0_1_20140522164823 extends Minion_Migration_Base {
 	 */
 	public function up(Kohana_Database $db)
 	{
-		$config = Kohana::$config->load('ushahidiui.oauth');
-
-		$results = DB::select('client_id')
-			->from('oauth_clients')
-			->where('client_id', '=', $config['client'])
-			->execute($db);
-
-		if ($results->count())
-		{
-			DB::update('oauth_clients')
-				->value('client_secret', $config['client_secret'])
-				->execute($db);
-		}
-		else
-		{
-			DB::insert('oauth_clients')
-				->columns(array('client_id', 'client_secret'))
-				->values(array($config['client'], $config['client_secret']))
-				->execute($db);
-		}
+		// noop, D120
 	}
 
 	/**
@@ -38,10 +19,7 @@ class Migration_Oauth2_0_1_20140522164823 extends Minion_Migration_Base {
 	 */
 	public function down(Kohana_Database $db)
 	{
-		$config = Kohana::$config->load('ushahidiui.oauth');
-		DB::delete('oauth_clients')
-			->where('client_id', '=', $config['client'])
-			->execute($db);
+		// noop, D120
 	}
 
 }
