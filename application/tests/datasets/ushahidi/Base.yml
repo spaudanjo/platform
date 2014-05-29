@@ -713,9 +713,6 @@ oauth_session_token_scopes:
   -
     session_access_token_id: 2
     scope_id: 10
-  -
-    session_access_token_id: 2
-    scope_id: 11
   # for testbasicuser
   -
     session_access_token_id: 3
@@ -747,9 +744,6 @@ oauth_session_token_scopes:
   -
     session_access_token_id: 3
     scope_id: 10
-  -
-    session_access_token_id: 3
-    scope_id: 11
   # for testadminuser
   -
     session_access_token_id: 4
@@ -781,9 +775,6 @@ oauth_session_token_scopes:
   -
     session_access_token_id: 4
     scope_id: 10
-  -
-    session_access_token_id: 4
-    scope_id: 11
   # for testbasicuser2
   -
     session_access_token_id: 5
@@ -815,9 +806,6 @@ oauth_session_token_scopes:
   -
     session_access_token_id: 5
     scope_id: 10
-  -
-    session_access_token_id: 5
-    scope_id: 11
   # for testanon
   -
     session_access_token_id: 6
@@ -849,9 +837,6 @@ oauth_session_token_scopes:
   -
     session_access_token_id: 6
     scope_id: 10
-  -
-    session_access_token_id: 6
-    scope_id: 11
 # media
 media:
   -
