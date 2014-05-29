@@ -39,6 +39,10 @@ abstract class Ushahidi_Core {
 		});
 		$di->set('oauth.server.resource', $di->lazyNew('League\OAuth2\Server\Resource'));
 
+		// Use Kohana requests for OAuth server requests
+		$di->setter['League\OAuth2\Server\Resource']['setRequest'] = $di->lazyNew('OAuth2_Request');
+		$di->setter['League\OAuth2\Server\Authorization']['setRequest'] = $di->lazyNew('OAuth2_Request');
+
 		// Custom password authenticator
 		$di->setter['League\OAuth2\Server\Grant\Password']['setVerifyCredentialsCallback'] = function($username, $password) {
 			$usecase = service('usecase.user.login');

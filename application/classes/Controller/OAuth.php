@@ -35,7 +35,7 @@ class Controller_OAuth extends Controller_Layout {
 	{
 		// todo: try/catch OAuthClientException
 		$server = service('oauth.server.auth');
-		$params = $server->getGrantType('authorization_code')->checkAuthoriseParams($this->request->query());
+		$params = $server->getGrantType('authorization_code')->checkAuthoriseParams();
 
 		$this->session->set('oauth', $params);
 
@@ -102,7 +102,7 @@ class Controller_OAuth extends Controller_Layout {
 
 		try
 		{
-			$response = $server->issueAccessToken($this->request->post());
+			$response = $server->issueAccessToken();
 		}
 		catch (OAuthClientException $e)
 		{
