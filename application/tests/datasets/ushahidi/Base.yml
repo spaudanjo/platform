@@ -681,7 +681,7 @@ oauth_session_token_scopes:
     scope_id: 1
   -
     session_access_token_id: 1
-    scope_id: 3
+    scope_id: 2
   # for defaulttoken
   -
     session_access_token_id: 2
