@@ -137,8 +137,13 @@ define(['jquery', 'App', 'backbone', 'marionette', 'underscore', 'alertify', 'UR
 				App.Collections.Posts.setFilterParams({}, true);
 				this.showHomeLayout();
 			},
+      alerts : function(){
+        debugger;
+        alert('alerts');
+      },
 			postsList : function(params)
 			{
+        alert('postsList');
 				var qs = new URI('?'+params),
 					searchParams = qs.search(true);
 
