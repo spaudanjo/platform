@@ -1,0 +1,13 @@
+/*-- Pattern Library --*/
+html.pl {
+	body {
+		background-color: #fff;
+		padding: 10px;
+		@media #{$medium-up} {
+			padding: 10px 10%;
+		}
+		@media #{$large-up} {
+			padding: 10px 20%;
+		}
+	}
+}

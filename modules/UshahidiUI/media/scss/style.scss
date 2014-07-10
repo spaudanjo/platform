@@ -101,7 +101,10 @@
  /* Import Toggle switch CSS, not SCSS to avoid bourbon conflict issues */
 @import "CSS:../bower_components/css-toggle-switch/dist/toggle-switch";
 
-
+/*------------------------------------*\
+		PATTERN LAB
+\*------------------------------------*/
+@import "tools/patternlab";
 
 /*------------------------------------*\
    $PARTIALS
