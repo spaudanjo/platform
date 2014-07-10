@@ -31,7 +31,7 @@
 /*------------------------------------*\
 		$COMPASS
 \*------------------------------------*/
-/* line 5, ../../../../../../../.rbenv/versions/2.1.2/lib/ruby/gems/2.1.0/gems/compass-core-1.0.0.alpha.19/stylesheets/compass/reset/_utilities.scss */
+/* line 5, ../../../../../../../../../Library/Ruby/Gems/2.0.0/gems/compass-core-1.0.0.alpha.20/stylesheets/compass/reset/_utilities.scss */
 html, body, div, span, applet, object, iframe,
 h1, h2, h3, h4, h5, h6, .post-form-wrapper label, p, blockquote, pre,
 a, abbr, acronym, address, big, cite, code,
@@ -53,55 +53,55 @@ time, mark, audio, video {
   vertical-align: baseline;
 }
 
-/* line 22, ../../../../../../../.rbenv/versions/2.1.2/lib/ruby/gems/2.1.0/gems/compass-core-1.0.0.alpha.19/stylesheets/compass/reset/_utilities.scss */
+/* line 22, ../../../../../../../../../Library/Ruby/Gems/2.0.0/gems/compass-core-1.0.0.alpha.20/stylesheets/compass/reset/_utilities.scss */
 html {
   line-height: 1;
 }
 
-/* line 24, ../../../../../../../.rbenv/versions/2.1.2/lib/ruby/gems/2.1.0/gems/compass-core-1.0.0.alpha.19/stylesheets/compass/reset/_utilities.scss */
+/* line 24, ../../../../../../../../../Library/Ruby/Gems/2.0.0/gems/compass-core-1.0.0.alpha.20/stylesheets/compass/reset/_utilities.scss */
 ol, ul {
   list-style: none;
 }
 
-/* line 26, ../../../../../../../.rbenv/versions/2.1.2/lib/ruby/gems/2.1.0/gems/compass-core-1.0.0.alpha.19/stylesheets/compass/reset/_utilities.scss */
+/* line 26, ../../../../../../../../../Library/Ruby/Gems/2.0.0/gems/compass-core-1.0.0.alpha.20/stylesheets/compass/reset/_utilities.scss */
 table {
   border-collapse: collapse;
   border-spacing: 0;
 }
 
-/* line 28, ../../../../../../../.rbenv/versions/2.1.2/lib/ruby/gems/2.1.0/gems/compass-core-1.0.0.alpha.19/stylesheets/compass/reset/_utilities.scss */
+/* line 28, ../../../../../../../../../Library/Ruby/Gems/2.0.0/gems/compass-core-1.0.0.alpha.20/stylesheets/compass/reset/_utilities.scss */
 caption, th, td {
   text-align: left;
   font-weight: normal;
   vertical-align: middle;
 }
 
-/* line 30, ../../../../../../../.rbenv/versions/2.1.2/lib/ruby/gems/2.1.0/gems/compass-core-1.0.0.alpha.19/stylesheets/compass/reset/_utilities.scss */
+/* line 30, ../../../../../../../../../Library/Ruby/Gems/2.0.0/gems/compass-core-1.0.0.alpha.20/stylesheets/compass/reset/_utilities.scss */
 q, blockquote {
   quotes: none;
 }
-/* line 103, ../../../../../../../.rbenv/versions/2.1.2/lib/ruby/gems/2.1.0/gems/compass-core-1.0.0.alpha.19/stylesheets/compass/reset/_utilities.scss */
+/* line 103, ../../../../../../../../../Library/Ruby/Gems/2.0.0/gems/compass-core-1.0.0.alpha.20/stylesheets/compass/reset/_utilities.scss */
 q:before, q:after, blockquote:before, blockquote:after {
   content: "";
   content: none;
 }
 
-/* line 32, ../../../../../../../.rbenv/versions/2.1.2/lib/ruby/gems/2.1.0/gems/compass-core-1.0.0.alpha.19/stylesheets/compass/reset/_utilities.scss */
+/* line 32, ../../../../../../../../../Library/Ruby/Gems/2.0.0/gems/compass-core-1.0.0.alpha.20/stylesheets/compass/reset/_utilities.scss */
 a img {
   border: none;
 }
 
-/* line 116, ../../../../../../../.rbenv/versions/2.1.2/lib/ruby/gems/2.1.0/gems/compass-core-1.0.0.alpha.19/stylesheets/compass/reset/_utilities.scss */
+/* line 116, ../../../../../../../../../Library/Ruby/Gems/2.0.0/gems/compass-core-1.0.0.alpha.20/stylesheets/compass/reset/_utilities.scss */
 article, aside, details, figcaption, figure, footer, header, hgroup, main, menu, nav, section, summary {
   display: block;
 }
 
-/* line 10, ../../../../../../../.rbenv/versions/2.1.2/lib/ruby/gems/2.1.0/gems/compass-core-1.0.0.alpha.19/stylesheets/compass/layout/_sticky-footer.scss */
+/* line 10, ../../../../../../../../../Library/Ruby/Gems/2.0.0/gems/compass-core-1.0.0.alpha.20/stylesheets/compass/layout/_sticky-footer.scss */
 html, body {
   height: 100%;
 }
 
-/* line 12, ../../../../../../../.rbenv/versions/2.1.2/lib/ruby/gems/2.1.0/gems/compass-core-1.0.0.alpha.19/stylesheets/compass/layout/_sticky-footer.scss */
+/* line 12, ../../../../../../../../../Library/Ruby/Gems/2.0.0/gems/compass-core-1.0.0.alpha.20/stylesheets/compass/layout/_sticky-footer.scss */
 .content-wrapper {
   clear: both;
   min-height: 100%;
@@ -109,12 +109,12 @@ html, body {
   height: 100%;
   margin-bottom: -72px;
 }
-/* line 18, ../../../../../../../.rbenv/versions/2.1.2/lib/ruby/gems/2.1.0/gems/compass-core-1.0.0.alpha.19/stylesheets/compass/layout/_sticky-footer.scss */
+/* line 18, ../../../../../../../../../Library/Ruby/Gems/2.0.0/gems/compass-core-1.0.0.alpha.20/stylesheets/compass/layout/_sticky-footer.scss */
 .content-wrapper .sticky-footer-root {
   height: 72px;
 }
 
-/* line 20, ../../../../../../../.rbenv/versions/2.1.2/lib/ruby/gems/2.1.0/gems/compass-core-1.0.0.alpha.19/stylesheets/compass/layout/_sticky-footer.scss */
+/* line 20, ../../../../../../../../../Library/Ruby/Gems/2.0.0/gems/compass-core-1.0.0.alpha.20/stylesheets/compass/layout/_sticky-footer.scss */
 .footer {
   clear: both;
   position: relative;
@@ -249,7 +249,6 @@ body:hover .visually-hidden a, body:hover .visually-hidden input, body:hover .vi
 .hidden, .sets-grid li .set-is-selected {
   opacity: 0;
   -moz-transition: opacity 0.3s ease-in-out;
-  -o-transition: opacity 0.3s ease-in-out;
   -webkit-transition: opacity 0.3s ease-in-out;
   transition: opacity 0.3s ease-in-out;
 }
@@ -258,7 +257,6 @@ body:hover .visually-hidden a, body:hover .visually-hidden input, body:hover .vi
 .visible, .sets-grid li.selected .set-is-selected {
   opacity: 1;
   -moz-transition: opacity 0.3s ease-in-out;
-  -o-transition: opacity 0.3s ease-in-out;
   -webkit-transition: opacity 0.3s ease-in-out;
   transition: opacity 0.3s ease-in-out;
 }
@@ -9351,8 +9349,8 @@ img.mfp-img {
  * -------------------------- */
 @font-face {
   font-family: "FontAwesome";
-  src: url('../../font/fontawesome-webfont.eot?1403648427');
-  src: url('../../font/fontawesome-webfont.eot?&1403648427#iefix') format('embedded-opentype'), url('../../font/fontawesome-webfont.woff?1403648427') format('woff'), url('../../font/fontawesome-webfont.eot?1403648427') format('embedded-opentype'), url('../../font/fontawesome-webfont.ttf?1403648427') format('truetype'), url('../../font/fontawesome-webfont.svg?1403648427') format('svg');
+  src: url('../../font/fontawesome-webfont.eot?1404142053');
+  src: url('../../font/fontawesome-webfont.eot?&1404142053#iefix') format('embedded-opentype'), url('../../font/fontawesome-webfont.woff?1404142053') format('woff'), url('../../font/fontawesome-webfont.eot?1404142053') format('embedded-opentype'), url('../../font/fontawesome-webfont.ttf?1404142053') format('truetype'), url('../../font/fontawesome-webfont.svg?1404142053') format('svg');
   font-weight: "normal";
   font-style: "normal";
 }
@@ -15838,7 +15836,7 @@ ul.pagination li:hover a, ul.pagination li a:focus {
 \*------------------------------------*/
 /* line 61, ../../scss/modules/header/_topbar.scss */
 .site-logo {
-  background: url('../../images/logo.png?1400725960') no-repeat;
+  background: url('../../images/logo.png?1404142053') no-repeat;
   background-size: 100%;
   height: 29px;
   width: 29px;
@@ -15848,7 +15846,7 @@ ul.pagination li:hover a, ul.pagination li a:focus {
 @media (min--moz-device-pixel-ratio: 1.3), (-o-min-device-pixel-ratio: 2.6 / 2), (-webkit-min-device-pixel-ratio: 1.3), (min-device-pixel-ratio: 1.3), (min-resolution: 1.3dppx) {
   /* line 61, ../../scss/modules/header/_topbar.scss */
   .site-logo {
-    background-image: url('../../images/logo@2x.png?1403050506');
+    background-image: url('../../images/logo@2x.png?1404142053');
     background-size: 29px 29px;
   }
 }
@@ -15948,7 +15946,6 @@ nav[role="sub-navigation"] {
   display: none;
   /*not working because css3 animation don't support display*/
   -moz-transition: max-height 0.3s ease-in-out;
-  -o-transition: max-height 0.3s ease-in-out;
   -webkit-transition: max-height 0.3s ease-in-out;
   transition: max-height 0.3s ease-in-out;
 }
@@ -16855,7 +16852,6 @@ nav[role="sub-navigation"] li a {
   height: 386px;
   min-height: 300px;
   -moz-transition: all 0.3s ease-in-out;
-  -o-transition: all 0.3s ease-in-out;
   -webkit-transition: all 0.3s ease-in-out;
   transition: all 0.3s ease-in-out;
 }
@@ -16872,7 +16868,6 @@ nav[role="sub-navigation"] li a {
   height: 38px;
   min-height: 0;
   -moz-transition: all 0.3s ease-in-out;
-  -o-transition: all 0.3s ease-in-out;
   -webkit-transition: all 0.3s ease-in-out;
   transition: all 0.3s ease-in-out;
 }
@@ -17330,7 +17325,6 @@ nav[role="sub-navigation"] li a {
   right: -300px;
   width: 300px;
   -moz-transition: -moz-transform 0.3s ease-in-out;
-  -o-transition: -o-transform 0.3s ease-in-out;
   -webkit-transition: -webkit-transform 0.3s ease-in-out;
   transition: transform 0.3s ease-in-out;
 }
@@ -17394,7 +17388,7 @@ nav[role="sub-navigation"] li a {
 
 /* line 36, ../../scss/modules/workspace/_workspace-panel.scss */
 .workspace-avatar {
-  background: url('../../images/avatar.png?1389753251') no-repeat;
+  background: url('../../images/avatar.png?1404142053') no-repeat;
   background-size: 100%;
   height: 58px;
   width: 58px;
@@ -19716,12 +19710,12 @@ Extends _post-details.scss & _post-overlay.scss
   padding-right: 0;
   width: 16.66667%;
   float: left;
-  background: url('../../images/tag-icon.png?1404205325') no-repeat;
+  background: url('../../images/tag-icon.png?1404765052') no-repeat;
 }
 @media (min--moz-device-pixel-ratio: 1.3), (-o-min-device-pixel-ratio: 2.6 / 2), (-webkit-min-device-pixel-ratio: 1.3), (min-device-pixel-ratio: 1.3), (min-resolution: 1.3dppx) {
   /* line 52, ../../scss/modules/posts/_post.scss */
   .post-tag-marker {
-    background-image: url('../../images/tag-icon@2x.png?1404205325');
+    background-image: url('../../images/tag-icon@2x.png?1404765052');
     background-size: 34px 34px;
   }
 }
@@ -21725,7 +21719,7 @@ textarea {
 /* line 65, ../../scss/modules/forms/_forms.scss */
 select {
   -webkit-appearance: none !important;
-  background: #fcfcfc url('../../images/dropdown-arrow.svg?1400725960') no-repeat;
+  background: #fcfcfc url('../../images/dropdown-arrow.svg?1404142053') no-repeat;
   background-size: 9px;
   background-position-x: 97%;
   background-position-y: center;
