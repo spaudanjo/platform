@@ -7,52 +7,52 @@
  * @license	https://www.gnu.org/licenses/agpl-3.0.html GNU Affero General Public License Version 3 (AGPL3)
  */
 
-define(['jquery', 'App', 'backbone', 'marionette', 'underscore', 'alertify', 'URI',
-	'controllers/ModalController',
+ define(['jquery', 'App', 'backbone', 'marionette', 'underscore', 'alertify', 'URI',
+ 	'controllers/ModalController',
 
-	'views/AppLayout',
-	'views/HomeLayout',
+ 	'views/AppLayout',
+ 	'views/HomeLayout',
 
-	'views/HeaderView',
-	'views/FooterView',
+ 	'views/HeaderView',
+ 	'views/FooterView',
 
-	'views/WorkspacePanelView',
+ 	'views/WorkspacePanelView',
 
-	'collections/PostCollection',
-	'collections/TagCollection',
-	'collections/FormCollection',
-	'collections/RoleCollection',
-	'collections/UserCollection',
+ 	'collections/PostCollection',
+ 	'collections/TagCollection',
+ 	'collections/FormCollection',
+ 	'collections/RoleCollection',
+ 	'collections/UserCollection',
 
-	'models/UserModel'
-	],
-	function($, App, Backbone, Marionette, _, alertify, URI,
-		ModalController,
+ 	'models/UserModel'
+ 	],
+ 	function($, App, Backbone, Marionette, _, alertify, URI,
+ 		ModalController,
 
-		AppLayout,
-		HomeLayout,
+ 		AppLayout,
+ 		HomeLayout,
 
-		HeaderView,
-		FooterView,
+ 		HeaderView,
+ 		FooterView,
 
-		WorkspacePanelView,
+ 		WorkspacePanelView,
 
-		PostCollection,
-		TagCollection,
-		FormCollection,
-		RoleCollection,
-		UserCollection,
+ 		PostCollection,
+ 		TagCollection,
+ 		FormCollection,
+ 		RoleCollection,
+ 		UserCollection,
 
-		UserModel
-		)
-	{
-		return Backbone.Marionette.Controller.extend(
-		{
-			initialize : function()
-			{
-				var user = new UserModel({ id: 'me' });
+ 		UserModel
+ 		)
+ 	{
+ 		return Backbone.Marionette.Controller.extend(
+ 		{
+ 			initialize : function()
+ 			{
+ 				var user = new UserModel({ id: 'me' });
 
-				if (App.loggedin()) {
+ 				if (App.loggedin()) {
 					// only fetch the user when logged in
 					user.fetch();
 				}
@@ -91,21 +91,21 @@ define(['jquery', 'App', 'backbone', 'marionette', 'underscore', 'alertify', 'UR
 
 				// Fake roles collection
 				App.Collections.Roles = new RoleCollection([
-					{
-						name : 'admin',
-						display_name : 'Admin',
-						description : 'Administrator'
-					},
-					{
-						name : 'user',
-						display_name : 'Member',
-						description : 'Default logged in user role'
-					},
-					{
-						name : 'guest',
-						display_name : 'Guest',
-						description : 'Unprivileged role given to users who are not logged in'
-					}
+				{
+					name : 'admin',
+					display_name : 'Admin',
+					description : 'Administrator'
+				},
+				{
+					name : 'user',
+					display_name : 'Member',
+					description : 'Default logged in user role'
+				},
+				{
+					name : 'guest',
+					display_name : 'Guest',
+					description : 'Unprivileged role given to users who are not logged in'
+				}
 				]);
 
 				// Open the user collection, but do not fetch it until necessary
@@ -137,19 +137,21 @@ define(['jquery', 'App', 'backbone', 'marionette', 'underscore', 'alertify', 'UR
 				App.Collections.Posts.setFilterParams({}, true);
 				this.showHomeLayout();
 			},
-      alerts : function(){
-        debugger;
-        alert('alerts');
-      },
+
 			postsList : function(params)
 			{
-        alert('postsList');
 				var qs = new URI('?'+params),
-					searchParams = qs.search(true);
+				searchParams = qs.search(true);
 
 				App.vent.trigger('page:change', 'posts');
 				App.Collections.Posts.setFilterParams(searchParams, true);
 				this.showHomeLayout();
+			},
+		    alerts : function(){
+                App.vent.trigger('page:change', 'alerts');
+				// debugger;
+				// alert('alerts');
+                this.showHomeLayout();
 			},
 			viewsFull : function()
 			{
@@ -192,14 +194,14 @@ define(['jquery', 'App', 'backbone', 'marionette', 'underscore', 'alertify', 'UR
 			postDetail : function(id)
 			{
 				var that = this,
-						postDetailLayout,
-						model,
-						relatedPosts;
+				postDetailLayout,
+				model,
+				relatedPosts;
 
 				require(['views/posts/PostDetailLayout', 'views/posts/PostDetailView', 'views/posts/RelatedPostsView', 'views/MapView', 'models/PostModel'],
 					function(PostDetailLayout, PostDetailView, RelatedPostsView, MapView, PostModel)
-				{
-					App.vent.trigger('page:change', 'posts/:id');
+					{
+						App.vent.trigger('page:change', 'posts/:id');
 					// @TODO find a way to reuse post detail views
 					postDetailLayout = new PostDetailLayout();
 					that.layout.mainRegion.show(postDetailLayout);
@@ -216,14 +218,14 @@ define(['jquery', 'App', 'backbone', 'marionette', 'underscore', 'alertify', 'UR
 						{
 							relatedPosts = new PostCollection();
 							relatedPosts
-								.setPageSize(4, {
-									first : true,
-									fetch : false,
-									data : {
-										tags : model.get('tags').join(',')
-									}
-								})
-								.done(function () {
+							.setPageSize(4, {
+								first : true,
+								fetch : false,
+								data : {
+									tags : model.get('tags').join(',')
+								}
+							})
+							.done(function () {
 									// Remove current post from the collection
 									relatedPosts.remove(model);
 									// Remove extra posts if we still have 4 posts..
@@ -262,38 +264,38 @@ define(['jquery', 'App', 'backbone', 'marionette', 'underscore', 'alertify', 'UR
 						model : model
 					}));
 				});
-			},
+},
 
 
 
-			users : function()
-			{
-				var that = this;
-				require(['views/users/UserListView'], function(UserListView)
-				{
-					App.Collections.Users.fetch();
+users : function()
+{
+	var that = this;
+	require(['views/users/UserListView'], function(UserListView)
+	{
+		App.Collections.Users.fetch();
 
-					App.vent.trigger('page:change', 'users');
+		App.vent.trigger('page:change', 'users');
 
-					that.layout.mainRegion.show(new UserListView({
-						collection : App.Collections.Users
-					}));
-				});
-			},
+		that.layout.mainRegion.show(new UserListView({
+			collection : App.Collections.Users
+		}));
+	});
+},
 
-			tags : function()
-			{
-				var that = this;
-				require(['views/tags/TagListView'], function(TagListView)
-				{
-					App.vent.trigger('page:change', 'tags');
-					App.Collections.Tags.fetch();
+tags : function()
+{
+	var that = this;
+	require(['views/tags/TagListView'], function(TagListView)
+	{
+		App.vent.trigger('page:change', 'tags');
+		App.Collections.Tags.fetch();
 
-					that.layout.mainRegion.show(new TagListView({
-						collection : App.Collections.Tags
-					}));
-				});
-			},
+		that.layout.mainRegion.show(new TagListView({
+			collection : App.Collections.Tags
+		}));
+	});
+},
 
 			// Extra postCreate handler to give us a direct URL to posts/create
 			postCreate : function ()
@@ -330,60 +332,60 @@ define(['jquery', 'App', 'backbone', 'marionette', 'underscore', 'alertify', 'UR
 			/**
 			 * Shows a form listing
 			 */
-			forms : function ()
-			{
-				var that = this;
-				require(['views/settings/FormList'], function(FormList)
-				{
-					App.vent.trigger('page:change', 'forms');
-					that.layout.mainRegion.show(new FormList({
-						collection : App.Collections.Forms
-					}));
-				});
-			},
+			 forms : function ()
+			 {
+			 	var that = this;
+			 	require(['views/settings/FormList'], function(FormList)
+			 	{
+			 		App.vent.trigger('page:change', 'forms');
+			 		that.layout.mainRegion.show(new FormList({
+			 			collection : App.Collections.Forms
+			 		}));
+			 	});
+			 },
 			/**
 			 * Show a post wizard for an editing a post form
 			 * @param  String form id
 			 */
-			formEdit : function(id)
-			{
-				var that = this;
-				require(['views/settings/FormEditor', 'views/settings/AvailableAttributeList', 'views/settings/FormAttributeList', 'collections/FormAttributeCollection'],
-					function(FormEditor, AvailableAttributeList, FormAttributeList, FormAttributeCollection)
-				{
-					App.vent.trigger('page:change', 'forms');
-					var form = App.Collections.Forms.get(id),
-						formEditor = new FormEditor({
-							model : form
-						}),
-						availableAttributes = new FormAttributeCollection([
-							{
-								label: 'Text',
-								input: 'Text',
-								type: 'varchar',
-								icon: 'fa-font'
-							},
-							{
-								label: 'TextArea',
-								input: 'TextArea',
-								type: 'text',
-								icon: 'fa-paragraph'
-							},
-							{
-								label: 'Number (Decimal)',
-								input: 'Number',
-								type: 'decimal',
-								icon: 'fa-fax'
-							},
-							{
-								label: 'Number (Integer)',
-								input: 'Number',
-								type: 'integer',
-								icon: 'fa-fax'
-							},
-							{
-								label: 'Select',
-								input: 'Select',
+			 formEdit : function(id)
+			 {
+			 	var that = this;
+			 	require(['views/settings/FormEditor', 'views/settings/AvailableAttributeList', 'views/settings/FormAttributeList', 'collections/FormAttributeCollection'],
+			 		function(FormEditor, AvailableAttributeList, FormAttributeList, FormAttributeCollection)
+			 		{
+			 			App.vent.trigger('page:change', 'forms');
+			 			var form = App.Collections.Forms.get(id),
+			 			formEditor = new FormEditor({
+			 				model : form
+			 			}),
+			 			availableAttributes = new FormAttributeCollection([
+			 			{
+			 				label: 'Text',
+			 				input: 'Text',
+			 				type: 'varchar',
+			 				icon: 'fa-font'
+			 			},
+			 			{
+			 				label: 'TextArea',
+			 				input: 'TextArea',
+			 				type: 'text',
+			 				icon: 'fa-paragraph'
+			 			},
+			 			{
+			 				label: 'Number (Decimal)',
+			 				input: 'Number',
+			 				type: 'decimal',
+			 				icon: 'fa-fax'
+			 			},
+			 			{
+			 				label: 'Number (Integer)',
+			 				input: 'Number',
+			 				type: 'integer',
+			 				icon: 'fa-fax'
+			 			},
+			 			{
+			 				label: 'Select',
+			 				input: 'Select',
 								type: 'varchar', // what about numeric selections?
 								options: [],
 								icon: 'fa-bars'
@@ -425,25 +427,25 @@ define(['jquery', 'App', 'backbone', 'marionette', 'underscore', 'alertify', 'UR
 								type: 'point',
 								icon: 'fa-map-marker'
 							}
-						]),
-						formAttributes = new FormAttributeCollection(_.values(form.formAttributes)),
-						formAttributeList = new FormAttributeList({
-							collection : formAttributes,
+							]),
+formAttributes = new FormAttributeCollection(_.values(form.formAttributes)),
+formAttributeList = new FormAttributeList({
+	collection : formAttributes,
 							form_group_id : form.get('groups')[0].id // @todo check this exists
 						});
 
-					that.layout.mainRegion.show(formEditor);
+that.layout.mainRegion.show(formEditor);
 
-					formAttributeList.on('itemview:edit', function(childView, model) {
-						formEditor.showEditor(model);
-					});
+formAttributeList.on('itemview:edit', function(childView, model) {
+	formEditor.showEditor(model);
+});
 
-					formEditor.formAttributes.show(formAttributeList);
-					formEditor.availableAttributes.show(new AvailableAttributeList({
-						collection : availableAttributes,
-						sortableList : formAttributeList
-					}));
-				});
-			}
-	});
+formEditor.formAttributes.show(formAttributeList);
+formEditor.availableAttributes.show(new AvailableAttributeList({
+	collection : availableAttributes,
+	sortableList : formAttributeList
+}));
+});
+}
+});
 });

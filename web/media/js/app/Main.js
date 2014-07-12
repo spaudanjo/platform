@@ -11,7 +11,8 @@ require(['Config'], function () {
 	require(['App', 'routers/AppRouter', 'controllers/Controller', 'jquery', 'ddt',
 		'settings/SettingsApp',
 		'messages/MessagesApp',
-		'sets/SetsApp'
+		'sets/SetsApp', 
+		'alerts/AlertsApp'
 	],
 	function(App, AppRouter, Controller, $)
 	{
