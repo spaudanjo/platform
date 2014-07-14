@@ -43,6 +43,18 @@ define(['underscore', 'backbone', 'models/MessageModel', 'modules/config', 'back
 					inbox : 'Inbox',
 					outbox : 'Outbox',
 					archived : 'Archived'
+				}, 
+
+				fetch: function(){
+					this.set([
+					  {
+					  	name: "test1"
+					  }, 
+					  {
+					  	name: "test2"
+					  }
+				    ]);
+					alert("FETCH AlertSubscriptionCollection")
 				}
 			},
 

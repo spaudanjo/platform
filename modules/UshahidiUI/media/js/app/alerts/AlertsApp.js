@@ -1,5 +1,5 @@
 /**
- * Settings Application
+ * Alert subscriptions Application
  *
  * @module     SettingsApp
  * @author     Ushahidi Team <team@ushahidi.com>
@@ -7,9 +7,9 @@
  * @license    https://www.gnu.org/licenses/agpl-3.0.html GNU Affero General Public License Version 3 (AGPL3)
  */
 
-define(['App', 'marionette', 'collections/AlertSubscriptionCollection', 'alerts/AlertSubscriptionListView'
+define(['App', 'marionette', 'models/AlertSubscriptionModel', 'collections/AlertSubscriptionCollection', 'alerts/AlertSubscriptionListView'
 	],
-	function(App, Marionette, AlertSubscriptionCollection, AlertSubscriptionListView)
+	function(App, Marionette, AlertSubscriptionModel, AlertSubscriptionCollection, AlertSubscriptionListView)
 	{
 		var AlertsAPI = {
 			/**
@@ -27,8 +27,10 @@ define(['App', 'marionette', 'collections/AlertSubscriptionCollection', 'alerts/
 			}, 
 
 			newAlertSubscription : function(){
-				App.vent.trigger('page:change', 'alerts');
-				alert("NEW ALERT SUBSCRIPTION");
+				App.vent.trigger('alert_subscriptions:create', 'alerts');
+				// App.layout.mainRegion
+				// console.log(newAlertSubscription);
+				// alert("NEW ALERT SUBSCRIPTION");
 
 			}
 		};
