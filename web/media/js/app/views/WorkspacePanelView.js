@@ -19,7 +19,8 @@ define(['underscore', 'marionette', 'App', 'modules/config', 'modules/textifyNum
 			events : {
 				'click .js-title' : 'toggleSection',
 				'click .js-logout' : 'confirmLogout',
-				'click .js-edit-profile' : 'editUser'
+				'click .js-edit-profile' : 'editUser', 
+				'click .js-create-alert-subscription' : 'createAlertSubscription'
 			},
 
 			counts: {
@@ -92,6 +93,11 @@ define(['underscore', 'marionette', 'App', 'modules/config', 'modules/textifyNum
 				e.preventDefault();
 				App.vent.trigger('user:edit', this.model);
 				App.vent.trigger('workspace:toggle', true);
+			}, 
+
+			createAlertSubscription : function(e){
+				e.preventDefault();
+				App.vent.trigger("alert_subscription:create");
 			}
 		});
 	});

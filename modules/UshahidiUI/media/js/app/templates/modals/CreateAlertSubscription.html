@@ -1,1 +1,15 @@
-<h1>TEMPLATE: CreateAlertSubscriptionView</h1>
+<div class="modal-header">
+  <h4>{{#if isNew}}Create new alert subscription{{else}}Edit alert subscription{{/if}}</h4>
+  <a class="js-modal-close">&#215;</a>
+</div> <!-- end modal-header -->
+
+<div class="modal-wrapper">
+    <section class="alert-subscription-form-wrapper">
+    </section> <!-- end create-post-options -->
+</div> <!-- end modal-wrapper -->
+
+<section class="modal-footer">
+  <div class="modal-submit">
+    <button type="submit" form="edit-alert-subscription-form"><i class="fa  fa-plus  fa-lg"></i> {{#if isNew}}Create alert subscription{{else}}Update alert subscription{{/if}} </button>
+  </div>
+</section> <!-- end modal-footer -->

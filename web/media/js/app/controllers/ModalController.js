@@ -27,7 +27,7 @@ define(['App', 'marionette'],
 				App.vent.on('user:create',this.userCreate, this);
 				App.vent.on('tag:edit', this.tagEdit, this);
 				App.vent.on('tag:create', this.tagCreate, this);
-				App.vent.on('alert_subscriptions:create', this.alertSubscriptionCreate, this);
+				App.vent.on('alert_subscription:create', this.alertSubscriptionCreate, this);
 			},
 			postCreate : function ()
 			{
@@ -113,7 +113,10 @@ define(['App', 'marionette'],
 				var that = this;
 				require(['views/modals/CreateAlertSubscriptionView', 'models/AlertSubscriptionModel'],
 					function(CreateAlertSubscriptionView, AlertSubscriptionModel){
-                      var newAlertSubscription = new AlertSubscriptionModel();
+                      var newAlertSubscription = new AlertSubscriptionModel({
+                      	name: "test alert subscription 1", 
+                      	street: "HIHA"
+                      });
                       that.modal.show(new CreateAlertSubscriptionView({
                       	model : newAlertSubscription
                       }));

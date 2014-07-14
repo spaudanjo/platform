@@ -15,7 +15,27 @@ define(['backbone', 'modules/config', 'backbone-model-factory'],
 			toString : function ()
 			{
 				return this.get('name');
-			}
+			},
+
+
+			schema : function ()
+			{
+				var schema = {
+					name: {
+						type: 'Text',
+						title: 'Name',
+						editorAttrs : {
+							placeholder : 'Enter name of the subscription'
+						}
+					},
+					street: {
+						type: 'Text',
+						title: 'The Street Name'
+					}
+				};
+
+				return schema;
+			},
 		});
 
 		return AlertSubscriptionModel;

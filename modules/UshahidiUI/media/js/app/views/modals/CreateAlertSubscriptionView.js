@@ -20,16 +20,38 @@
  			template: template,
  			initialize : function ()
  			{
- 				alert("init Create Alert subscription view");
+ 				this.form = new BackboneForm({
+ 					model: this.model, 
+ 					idPrefix: "IDEFIX", 
+ 					className: 'edit-alert-subscription-TESTCLASS'
+ 				});
  			},
+			onDomRefresh : function()
+			{
+				// Render the form and add it to the view
+				this.form.render();
+
+				// Set form id, backbone-forms doesn't do it.
+				this.form.$el.attr('id', 'edit-alert-subscription-form');
+
+				this.$('.alert-subscription-form-wrapper').append(this.form.el);
+			},
  			events: {
 				// 'submit form' : 'formSubmitted',
 				// 'click .js-switch-fieldset' : 'switchFieldSet',
 				// 'click .js-back-button' : 'goBack'
 			},
-			onShow: function()
+			serializeData: function()
 			{
-			}
+				return _.extend(this.model.toJSON(),
+					{
+						isNew : this.model.isNew()
+					}
+				);
+			}, 
+			// serializeData : function(){
+			// 	return {name: }
+			// }
 		});
 	}
 );

@@ -27,7 +27,7 @@ define(['App', 'marionette', 'models/AlertSubscriptionModel', 'collections/Alert
 			}, 
 
 			newAlertSubscription : function(){
-				App.vent.trigger('alert_subscriptions:create', 'alerts');
+				App.vent.trigger('alert_subscriptions:create');
 				// App.layout.mainRegion
 				// console.log(newAlertSubscription);
 				// alert("NEW ALERT SUBSCRIPTION");
@@ -39,7 +39,7 @@ define(['App', 'marionette', 'models/AlertSubscriptionModel', 'collections/Alert
 			new Marionette.AppRouter({
 				appRoutes: {
 					'alerts/subscriptions' : 'showAlertSubscriptions', 
-					'alerts/subscriptions/new' : 'newAlertSubscription'
+					// 'alerts/subscriptions/new' : 'newAlertSubscription'
 				},
 				controller: AlertsAPI
 			});
