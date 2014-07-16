@@ -26,6 +26,13 @@
  					className: 'edit-alert-subscription-TESTCLASS'
  				});
  			},
+
+ 			events: {
+				'submit form' : 'formSubmitted',
+				// 'click .js-switch-fieldset' : 'switchFieldSet',
+				// 'click .js-back-button' : 'goBack'
+			},
+
 			onDomRefresh : function()
 			{
 				// Render the form and add it to the view
@@ -36,10 +43,9 @@
 
 				this.$('.alert-subscription-form-wrapper').append(this.form.el);
 			},
- 			events: {
-				// 'submit form' : 'formSubmitted',
-				// 'click .js-switch-fieldset' : 'switchFieldSet',
-				// 'click .js-back-button' : 'goBack'
+
+			formSubmitted: function(e){
+				e.preventDefault();
 			},
 			serializeData: function()
 			{
