@@ -8,6 +8,14 @@
  * @license    https://www.gnu.org/licenses/agpl-3.0.html GNU Affero General Public License Version 3 (AGPL3)
  */
 
+
+Route::set('create-alert-subscription', 'api/v2/alerts/subscriptions', 
+	array())
+    ->defaults(array(
+		'action' => 'create', 
+		'controller' => 'AlertSubscription', 
+		'directory' => 'Api'));
+
 /**
  * Custom media router.
  */
