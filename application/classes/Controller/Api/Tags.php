@@ -38,6 +38,12 @@ class Controller_Api_Tags extends Ushahidi_Api {
 	 */
 	protected function _resource()
 	{
+		// debug_print_backtrace();
+        // var_dump(debug_backtrace());
+		// die("_resource");
+
+
+
 		parent::_resource();
 
 		$this->_resource = 'tags';
@@ -68,6 +74,7 @@ class Controller_Api_Tags extends Ushahidi_Api {
 	 */
 	public function action_post_index_collection()
 	{
+		// die("action_post_index_collection");
 		$format  = service('formatter.entity.tag');
 		$parser  = service('parser.tag.create');
 		$usecase = service('usecase.tag.create');
@@ -98,6 +105,11 @@ class Controller_Api_Tags extends Ushahidi_Api {
 	 */
 	public function action_get_index_collection()
 	{
+		// die("action_get_index_collection");
+
+        // var_dump(debug_backtrace());
+        // echo Debug::vars($foo, $bar);
+        
 		$repo   = service('repository.tag');
 		$parser = service('parser.tag.search');
 		$format = service('formatter.entity.tag');
@@ -146,6 +158,7 @@ class Controller_Api_Tags extends Ushahidi_Api {
 	 */
 	public function action_get_index()
 	{
+		// die("action_get_index");
 		$repo   = service('repository.tag');
 		$format = service('formatter.entity.api');
 		$tagid  = $this->request->param('id') ?: 0;
@@ -171,6 +184,8 @@ class Controller_Api_Tags extends Ushahidi_Api {
 	 */
 	public function action_put_index()
 	{
+
+		// die("action_put_index");
 		$format  = service('formatter.entity.api');
 		$parser  = service('parser.tag.update');
 		$usecase = service('usecase.tag.update');
@@ -213,6 +228,7 @@ class Controller_Api_Tags extends Ushahidi_Api {
 	 */
 	public function action_delete_index()
 	{
+		// die("action_delete_index");
 		$format  = service('formatter.entity.tag');
 		$parser  = service('parser.tag.delete');
 		$usecase = service('usecase.tag.delete');

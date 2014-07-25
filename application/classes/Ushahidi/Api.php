@@ -196,6 +196,7 @@ class Ushahidi_Api extends Controller {
 
 		try
 		{
+			// echo Debug::vars($require_header, $this->request);
 			$server->isValid($require_header);
 		}
 		catch (League\OAuth2\Server\Exception\OAuth2Exception $e)
