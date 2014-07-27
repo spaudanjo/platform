@@ -177,7 +177,7 @@ Route::set('dataproviders-api', 'api/v2/dataproviders(/<id>)',
 /**
  * Dataproviders API Route
  */
-Route::set('alert-subscriptions-api', 'api/v2/alert-subscriptions')
+Route::set('alert-subscriptions-api', 'api/v2/alert_subscriptions')
 	->defaults(array(
 		'action'     => 'index',
 		'directory'  => 'Api',

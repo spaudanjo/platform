@@ -81,9 +81,9 @@ class Controller_Api_AlertSubscriptions extends Ushahidi_Api {
 
 		// var_dump($this->request);
 
-		// $this->view = View_Api::factory('User');
-		$this->view->set_acl($this->acl);
-		$this->view->set_user($this->user);
+		// $this->view = View_Api::factory('AlertSubscription');
+		// $this->view->set_acl($this->acl);
+		// $this->view->set_user($this->user);
 	}
 
 	public function action_index()
@@ -189,7 +189,7 @@ class Controller_Api_AlertSubscriptions extends Ushahidi_Api {
 			// Check if user is allowed to access this user
 			if ($this->acl->is_allowed($this->user, $user, 'get') )
 			{
-				$result = $this->view->render($user);
+				// $result = $this->view->render($user);
 				$result['allowed_methods'] = $this->_allowed_methods($user);
 				$results[] = $result;
 			}
@@ -253,7 +253,7 @@ class Controller_Api_AlertSubscriptions extends Ushahidi_Api {
 
 		$user = $this->resource();
 
-		$this->_response_payload = $this->view->render($user);
+		// $this->_response_payload = $this->view->render($user);
 		$this->_response_payload['allowed_methods'] = $this->_allowed_methods();
 
 	}

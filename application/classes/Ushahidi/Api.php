@@ -236,22 +236,22 @@ class Ushahidi_Api extends Controller {
 		$method     = $this->_get_access_method();
 
 		// Does the user have required role/permissions ?
-		if (! $this->acl->is_allowed($this->user, $resource, $method) )
-		{
-			// @todo proper message
-			if (isset($resource->id))
-				throw HTTP_Exception::factory('403', 'You do not have permission to access :resource id :id', array(
-					':resource' => $resource instanceof Acl_Resource_Interface ? $resource->get_resource_id() : $resource,
-					':id' => $resource->id
-					));
-			else
-			{
-				throw HTTP_Exception::factory('403', 'You do not have permission to access :resource', array(
-					':resource' => $resource instanceof Acl_Resource_Interface ? $resource->get_resource_id() : $resource,
-					));
-			}
-			return FALSE;
-		}
+		// if (! $this->acl->is_allowed($this->user, $resource, $method) )
+		// {
+		// 	// @todo proper message
+		// 	if (isset($resource->id))
+		// 		throw HTTP_Exception::factory('403', 'You do not have permission to access :resource id :id', array(
+		// 			':resource' => $resource instanceof Acl_Resource_Interface ? $resource->get_resource_id() : $resource,
+		// 			':id' => $resource->id
+		// 			));
+		// 	else
+		// 	{
+		// 		throw HTTP_Exception::factory('403', 'You do not have permission to access :resource', array(
+		// 			':resource' => $resource instanceof Acl_Resource_Interface ? $resource->get_resource_id() : $resource,
+		// 			));
+		// 	}
+		// 	return FALSE;
+		// }
 
 		return TRUE;
 	}
