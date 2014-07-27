@@ -112,6 +112,9 @@ abstract class Ushahidi_Core {
 		$di->set('repository.oauth.session', $di->lazyNew('OAuth2_Storage_Session'));
 		$di->set('repository.oauth.scope', $di->lazyNew('OAuth2_Storage_Scope'));
 
+		$di->set('repository.alert_subscriptions', $di->lazyNew('Ushahidi_Repository_AlertSubscription'));
+
+
 		// Abstract repository parameters
 		$di->params['Ushahidi_Repository'] = [
 			'db' => $di->lazyGet('kohana.db'),

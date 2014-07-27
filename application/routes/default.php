@@ -173,6 +173,18 @@ Route::set('dataproviders-api', 'api/v2/dataproviders(/<id>)',
 		'controller' => 'DataProviders',
 	));
 
+
+/**
+ * Dataproviders API Route
+ */
+Route::set('alert-subscriptions-api', 'api/v2/alert-subscriptions')
+	->defaults(array(
+		'action'     => 'index',
+		'directory'  => 'Api',
+		'controller' => 'AlertSubscriptions',
+	));
+
+
 /**
  * Base Ushahidi API Route
  */
