@@ -11,7 +11,7 @@ class AlertSubscription extends Entity
 
 	public function getResource()
 	{
-		return 'AlertSubscription';
+		return 'alert_subscriptions';
 	}
 }
 

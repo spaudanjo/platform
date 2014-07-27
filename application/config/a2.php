@@ -95,6 +95,11 @@ return array(
 				'role' => 'admin'
 			),
 			// User
+			'UserCanSeeAndCreateAndEditAndDeleteAlertSubscriptions' => array(
+				'role'      => 'user',
+				'resource'  => 'alert_subscriptions',
+				'privilege' => array('get', 'put', 'post', 'delete')
+			),
 			'UserCanEditOwnPost' => array(
 				'role'      => 'user',
 				'resource'  => 'posts',
@@ -123,6 +128,11 @@ return array(
 				'assertion' => array('Acl_Assert_Argument', array('id' => 'id'))
 			),
 			// Guest
+			'GuestCanSeeAndCreateAndEditAndDeleteAlertSubscriptions' => array(
+				'role'      => 'guest',
+				'resource'  => 'alert_subscriptions',
+				'privilege' => array('get', 'put', 'post', 'delete')
+			),
 			'GuestCanViewPublicPost' => array(
 				'role'      => 'guest',
 				'resource'  => 'posts',

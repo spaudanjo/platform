@@ -39,9 +39,9 @@ class Controller_Api_AlertSubscriptions extends Ushahidi_Api {
 	protected function _resource()
 	{
 
-		// parent::_resource();
+		parent::_resource();
 
-		// $this->_resource = 'users';
+		$this->_resource = 'alert_subscriptions';
 
 		// $this->_resource = ORM::factory('User');
 
@@ -250,12 +250,10 @@ class Controller_Api_AlertSubscriptions extends Ushahidi_Api {
 
 		return; 
 
-
 		$user = $this->resource();
 
 		// $this->_response_payload = $this->view->render($user);
 		$this->_response_payload['allowed_methods'] = $this->_allowed_methods();
-
 	}
 
 
