@@ -88,19 +88,27 @@ class Controller_Api_AlertSubscriptions extends Ushahidi_Api {
 
 	public function action_get_index_collection()
 	{
-		//Respond with Users
-		$this->_response_payload = array(
-				'count' => 1,
-				'total_count' => 2,
-				'results' => 3,
-				'limit' => 4,
-				'offset' => 5,
-				'order' => 6,
-				'orderby' => 7,
-				'curr' => 8,
-				'next' => 9,
-				'prev' => 10,
-		);
+		$repo 	= service("repository.alert_subscription");
+		// $format = service("formatter.entity.alert_subscription");
+
+		$alert_subscriptions = $repo->getAll();
+
+		// $this->_response_payload = array(
+		// 		'count' => 1,
+		// 		'total_count' => 2,
+		// 		'results' => 3,
+		// 		'limit' => 4,
+		// 		'offset' => 5,
+		// 		'order' => 6,
+		// 		'orderby' => 7,
+		// 		'curr' => 8,
+		// 		'next' => 9,
+		// 		'prev' => 10,
+		// );
+
+		$this->_response_payload = $alert_subscriptions;
+
+
 	}
 
 	/**

@@ -9,10 +9,19 @@ class Migration_3_0_20140727143229 extends Minion_Migration_Base {
 	 */
 	public function up(Kohana_Database $db)
 	{
-		$db->query(NULL,
-			"CREATE TABLE `alert_subscriptions` (
-				 `alert_subscription_id` int(11) unsigned NOT NULL,
-				`name` VARCHAR(255) NOT NULL DEFAULT '')");
+		// $db->query(NULL,
+		// 	'CREATE TABLE `alert_subscriptions` (
+		// 		 `id` int(11) unsigned NOT NULL,
+		// 		`name` VARCHAR(255) NOT NULL DEFAULT)');
+
+		$db->query(NULL, "CREATE TABLE IF NOT EXISTS `alert_subscriptions` (
+			`id` INT(11) UNSIGNED NOT NULL AUTO_INCREMENT ,
+			`name` VARCHAR(150) NOT NULL DEFAULT '' ,
+			PRIMARY KEY (`id`)
+		)
+		ENGINE = InnoDB
+		DEFAULT CHARACTER SET = utf8;");
+
 	}
 
 	/**

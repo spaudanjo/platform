@@ -21,6 +21,16 @@ implements AlertSubscriptionRepository
 		return new AlertSubscription($data);
 	}
 
+	public function getAll()
+	{
+		$query = $this->selectQuery();
+		$results = $query->execute($this->db);
+
+		return $this->getCollection($results->as_array());
+		// return ["jo1", "jo2"];
+
+	}
+
 }
 
 

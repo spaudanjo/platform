@@ -103,6 +103,8 @@ abstract class Ushahidi_Core {
 		};
 
 		// Repositories
+		$di->set('repository.alert_subscription', $di->lazyNew('Ushahidi_Repository_AlertSubscription'));
+
 		$di->set('repository.config', $di->lazyNew('Ushahidi_Repository_Config'));
 		$di->set('repository.contact', $di->lazyNew('Ushahidi_Repository_Contact'));
 		$di->set('repository.media', $di->lazyNew('Ushahidi_Repository_Media'));
