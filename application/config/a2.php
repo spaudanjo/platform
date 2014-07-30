@@ -73,6 +73,7 @@ return array(
 		'login'              => NULL,
 		'register'           => NULL,
 		'logout'             => NULL,
+		'alert_subscriptions'             => NULL,
 		// Special default value - used to ensure dev assign some resource id
 		'undefined'          => NULL,
 	),
@@ -94,6 +95,10 @@ return array(
 				'role' => 'admin'
 			),
 			// User
+			'UserCanViewAlertSubscriptions' => array(
+				'role' => 'user',
+				'resource' => 'alert_subscriptions', 
+				'privilege' => array('get')),
 			'UserCanEditOwnPost' => array(
 				'role'      => 'user',
 				'resource'  => 'posts',
@@ -122,6 +127,10 @@ return array(
 				'assertion' => array('Acl_Assert_Argument', array('id' => 'id'))
 			),
 			// Guest
+			'GuestCanViewAlertSubscriptions' => array(
+				'role' => 'guest',
+				'resource' => 'alert_subscriptions', 
+				'privilege' => array('get')),
 			'GuestCanViewPublicPost' => array(
 				'role'      => 'guest',
 				'resource'  => 'posts',

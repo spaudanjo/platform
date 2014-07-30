@@ -13,6 +13,7 @@ return array(
 		'config',
 		'messages',
 		'dataproviders',
+		'alert_subscriptions',
 		'stats'
 	),
 	'www_realm'        => 'Ushahidi API',
