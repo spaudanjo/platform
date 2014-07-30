@@ -19,6 +19,19 @@ Route::set('media', 'media/<filepath>', array(
 		'action'     => 'serve',
 	));
 
+
+/**
+ * Alert subscription router.
+ */
+Route::set('alert-subscriptions', 'api/v2/alert_subscriptions')
+	->defaults(array(
+		'action'     => 'index',
+		'controller' => 'AlertSubscriptions',
+		'directory'  => 'Api'
+	));
+
+
+
 /**
  * Set Posts API SubRoute
  */
