@@ -15,7 +15,7 @@ return array(
 	// Sets UI
 	'sets_ui' => FALSE,
 	// Api Explorer
-	'api_explorer' => FALSE,
+	'api_explorer' => TRUE,
 	//Data Provider Config UI
 	'data_provider_config' => FALSE,
 	// Post Export
