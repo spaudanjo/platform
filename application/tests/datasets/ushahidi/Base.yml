@@ -34,6 +34,16 @@ users:
     realname:
     email:
     role: "admin"
+alert_subscriptions:
+  -
+    id: 1
+    name: 'Test Alert Subscription 1'
+  -
+    id: 2
+    name: 'Test Alert Subscription 2'
+  -
+    id: 3
+    name: 'Test Alert Subscription 3'
 forms:
   -
     id: 1
