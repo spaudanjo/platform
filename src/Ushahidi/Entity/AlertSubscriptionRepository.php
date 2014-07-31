@@ -15,9 +15,15 @@ interface AlertSubscriptionRepository
 {
 
 	/**
-	 * @return array of \Ushahidi\Entity\AlertSubscription
+	 * @return array of Ushahidi\Entity\AlertSubscription
 	 */
 	public function getAll();
+
+	/**
+	 * @param int $id
+	 * @return Ushahidi\Entity\AlertSubscription
+	 */
+	public function get($id);
 
 }
 

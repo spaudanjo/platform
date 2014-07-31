@@ -49,4 +49,9 @@ class Ushahidi_Repository_AlertSubscription extends Ushahidi_Repository implemen
 
 		return $this->getCollection($results->as_array());
 	}
+
+	public function get($id)
+	{
+		return $this->getEntity($this->selectOne(compact('id')));
+	}
 }
