@@ -23,11 +23,15 @@ Route::set('media', 'media/<filepath>', array(
 /**
  * Alert subscription router.
  */
-Route::set('alert-subscriptions', 'api/v2/alert_subscriptions')
+
+Route::set('alert-subscriptions', 'api/v2/alert_subscriptions(/<id>(/<action>))',
+	array(
+		'id' => '\d+'
+	))
 	->defaults(array(
 		'action'     => 'index',
-		'controller' => 'AlertSubscriptions',
-		'directory'  => 'Api'
+		'directory'  => 'Api',
+		'controller' => 'AlertSubscriptions'
 	));
 
 
