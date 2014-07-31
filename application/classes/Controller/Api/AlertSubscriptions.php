@@ -30,6 +30,29 @@ class Controller_Api_AlertSubscriptions extends Ushahidi_Api {
 
 
 	/**
+	 * Retrieve A Alert Subscription
+	 *
+	 * GET /api/tags/:id
+	 *
+	 * @return void
+	 */
+	public function action_get_index()
+	{
+		$repo 					= service("repository.alert_subscription");
+		$format					= service("formatter.entity.api");
+		$alert_subscription_id 	= $this->request->param('id');
+		$alert_subscription 	= $repo->get($alert_subscription_id);
+
+		if(!$alert_subscription->id)
+		{
+			throw new HTTP_EXCEPTION_404('Alert Subscription :id does not exist', array(':id' => $alert_subscription_id));
+		}
+
+		$this->_response_payload = $format($alert_subscription);
+		$this->_response_payload['allowed_methods'] = $this->_allowed_methods();
+	}
+
+	/**
 	 * Retrieve all AlertSubscriptions
 	 *
 	 * GET /api/alert_subscription
