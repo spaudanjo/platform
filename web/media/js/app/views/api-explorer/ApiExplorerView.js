@@ -20,7 +20,9 @@ define(['App', 'modules/config', 'marionette', 'underscore', 'alertify', 'syntax
 			events:
 			{
 				'click .js-api-endpoint' : 'endpointClick',
-				'submit .js-api-explorer-form' : 'submitForm'
+				'click .js-add-sample-data' : 'addSampleDataClick',
+				'submit .js-api-explorer-form' : 'submitForm', 
+
 			},
 
 			modelEvents :
@@ -50,6 +52,11 @@ define(['App', 'modules/config', 'marionette', 'underscore', 'alertify', 'syntax
 
 				this.executeRequest( endpoint, requestMethod, extraData);
 
+			},
+
+			addSampleDataClick : function(e){
+				e.preventDefault();
+				var $el 
 			},
 
 			// Make a call to the API
