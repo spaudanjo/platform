@@ -26,5 +26,11 @@ interface CreateAlertSubscriptionRepository
 	/*
 	* @return Ushahidi\Entity\AlertSubscription
 	*/
-	public function getCreatedAlertSubscriptionId();
+	public function getCreatedAlertSubscription();
+
+	/**
+	 * @return  int
+	 */
+	public function getCreatedAlertSubscriptionTimestamp();
+
 }

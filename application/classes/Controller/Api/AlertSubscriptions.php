@@ -105,7 +105,7 @@ class Controller_Api_AlertSubscriptions extends Ushahidi_Api {
 			// Also handles ParseException
 			throw new HTTP_Exception_400('Validation Error: \':errors\'', array
 				(
-				':errors' => implode(', ', Arr:flatten($e->getErrors())),
+				':errors' => implode(', ', Arr::flatten($e->getErrors())),
 			));
 		}
 

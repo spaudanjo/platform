@@ -11,6 +11,7 @@
 
 use Ushahidi\Entity\AlertSubscription;
 use Ushahidi\Entity\AlertSubscriptionRepository;
+use Ushahidi\Usecase\AlertSubscription\CreateAlertSubscriptionRepository;
 
 class Ushahidi_Repository_AlertSubscription extends Ushahidi_Repository implements
 	AlertSubscriptionRepository, 
@@ -55,4 +56,28 @@ class Ushahidi_Repository_AlertSubscription extends Ushahidi_Repository implemen
 	{
 		return $this->getEntity($this->selectOne(compact('id')));
 	}
+
+
+	public function createAlertSubscription($name)
+	{
+		$input = compact('name');
+		$input['created'] = $this->created_ts = time();
+		$this->created_id = $this->insert($input);
+	}
+
+	public function getCreatedAlertSubscriptionId()
+	{
+		$this->created_id;
+	}
+
+	public function getCreatedAlertSubscriptionTimestamp()
+	{
+		return $this->created_ts;
+	}
+
+	public function getCreatedAlertSubscription()
+	{
+		return $this->get($this->created_id);
+	}
+
 }

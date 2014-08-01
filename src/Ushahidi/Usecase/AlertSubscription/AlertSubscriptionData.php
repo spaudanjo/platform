@@ -16,4 +16,5 @@ use Ushahidi\Data;
 class AlertSubscriptionData extends Data
 {
 	public $name;
+	public $created;
 }
