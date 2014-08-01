@@ -13,7 +13,8 @@ use Ushahidi\Entity\AlertSubscription;
 use Ushahidi\Entity\AlertSubscriptionRepository;
 
 class Ushahidi_Repository_AlertSubscription extends Ushahidi_Repository implements
-	AlertSubscriptionRepository
+	AlertSubscriptionRepository, 
+	CreateAlertSubscriptionRepository
 {
 
 	protected function getTable()

@@ -83,4 +83,34 @@ class Controller_Api_AlertSubscriptions extends Ushahidi_Api {
 		$this->_response_payload['allowed_methods'] = $this->_allowed_methods();
 	}
 
+	/**
+	* Create a new Alert Subscription
+	*
+	* POST /api/alert_subscriptions
+	* @return void 
+	*/
+	public function action_post_index_collection()
+	{
+		$usecase 	= service("usecase.alert_subscription.create");
+		$format 	= service("formatter.entity.alert_subscription");
+		$parser 	= service("parser.alert_subscription.create");
+
+		try
+		{
+			$parsed_request_data = $parser($this->_request_payload);
+			$alert_subscription = $usecase->interact($parsed_request_data);
+		}
+		catch (Ushahidi\Exception\ValidatorException $e)
+		{
+			// Also handles ParseException
+			throw new HTTP_Exception_400('Validation Error: \':errors\'', array
+				(
+				':errors' => implode(', ', Arr:flatten($e->getErrors())),
+			));
+		}
+
+		$this->_response_payload = $format($alert_subscription);
+		$this->_response_payload['allowed_methods'] = $this->_allowed_methods();
+	}
+
 }
