@@ -73,7 +73,7 @@ class Controller_Api_AlertSubscriptions extends Ushahidi_Api {
 		foreach ($alert_subscriptions as $alert_subscription)
 		{
 			$result = $format($alert_subscription);
-			$results = $result;
+			$results[] = $result;
 		}
         
 		$this->_response_payload = array(
