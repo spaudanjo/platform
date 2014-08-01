@@ -41,6 +41,20 @@
 
 <dl class="workspace-menu  accordion">
 	<dd>
+		<a id="workspace-menu-alert-subscriptions" class="active  title  js-title" data-section-title><i class="fa  fa-files-o"></i> Alert Subscriptions</a>
+		<div id="panel1" class="active  content  js-content">
+			<ul>
+				<li id="workspace-menu-alert-subscriptions-new" data-page="alert-subscriptions">
+					<a href="{{#url}}alert-subscriptions{{/url}}"><p><i class="fa  fa-file-o"></i> New <span class="alert-subscriptions-new-label">{{ alert_subscriptions.new }}</span></p></a>
+				</li>
+
+				<li id="workspace-menu-alert-subscriptions-all" data-page="alert-subscriptions">
+					<a href="{{#url}}alert-subscriptions{{/url}}"><p><i class="fa  fa-files-o"></i> All <span class="alert-subscriptions-all-label">{{ alert_subscriptions.all }}</span></p></a>
+				</li>
+			</ul>
+		</div> <!-- end .content -->
+	</dd>
+	<dd>
 		<a id="workspace-menu-posts" class="active  title  js-title" data-section-title><i class="fa  fa-files-o"></i> Posts</a>
 		<div id="panel1" class="active  content  js-content">
 			<ul>
