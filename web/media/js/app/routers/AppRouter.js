@@ -23,6 +23,8 @@ define(['marionette'],
 				'settings/users' : 'users',
 				'settings/tags' : 'tags',
 
+				'alert-subscriptions' : 'alertSubscriptionsList',
+
 				'apiexplorer' : 'apiExplorer',
 				'settings/forms' : 'forms',
 				// 'settings/forms/new' : 'formNew',

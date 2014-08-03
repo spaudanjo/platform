@@ -23,6 +23,7 @@ define(['jquery', 'App', 'backbone', 'marionette', 'underscore', 'alertify', 'UR
 	'collections/FormCollection',
 	'collections/RoleCollection',
 	'collections/UserCollection',
+	'collections/AlertSubscriptionCollection',
 
 	'models/UserModel'
 	],
@@ -42,10 +43,11 @@ define(['jquery', 'App', 'backbone', 'marionette', 'underscore', 'alertify', 'UR
 		FormCollection,
 		RoleCollection,
 		UserCollection,
+		AlertSubscriptionCollection,
 
 		UserModel
 		)
-	{
+	{				
 		return Backbone.Marionette.Controller.extend(
 		{
 			initialize : function()
@@ -88,6 +90,9 @@ define(['jquery', 'App', 'backbone', 'marionette', 'underscore', 'alertify', 'UR
 
 				App.Collections.Forms = new FormCollection();
 				App.Collections.Forms.fetch();
+
+				App.Collections.AlertSubscriptions = new AlertSubscriptionCollection();
+				App.Collections.AlertSubscriptions.fetch();
 
 				// Fake roles collection
 				App.Collections.Roles = new RoleCollection([
@@ -136,6 +141,14 @@ define(['jquery', 'App', 'backbone', 'marionette', 'underscore', 'alertify', 'UR
 				App.vent.trigger('views:change', 'full');
 				App.Collections.Posts.setFilterParams({}, true);
 				this.showHomeLayout();
+			},
+			alertSubscriptionsList : function()
+			{
+				alert("TEST");
+				App.vent.trigger('page:change', 'alert_subscriptions');
+				that.layout.mainRegion.show(new AlertSubscriptionListView({
+					collection : App.Collections.AlertSubscriptions
+				}));
 			},
 			postsList : function(params)
 			{
