@@ -34,3 +34,5 @@ modules/image
 modules/unittest
 modules/minion
 modules/orm
+
+.idea/
