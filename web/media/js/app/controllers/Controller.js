@@ -144,11 +144,15 @@ define(['jquery', 'App', 'backbone', 'marionette', 'underscore', 'alertify', 'UR
 			},
 			alertSubscriptionsList : function()
 			{
-				alert("TEST");
-				App.vent.trigger('page:change', 'alert_subscriptions');
-				that.layout.mainRegion.show(new AlertSubscriptionListView({
-					collection : App.Collections.AlertSubscriptions
-				}));
+				var that = this;
+				require(['views/alert_subscriptions/AlertSubscriptionListView'], function(AlertSubscriptionListView)
+				{
+					App.vent.trigger('page:change', 'alert_subscriptions');
+					that.layout.mainRegion.show(new AlertSubscriptionListView({
+						collection : App.Collections.AlertSubscriptions
+					}));
+				});
+
 			},
 			postsList : function(params)
 			{
