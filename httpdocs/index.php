@@ -3,6 +3,9 @@
 // Set the full path to the docroot
 define('DOCROOT', realpath(dirname(__FILE__)) . DIRECTORY_SEPARATOR);
 
+// header("Access-Control-Allow-Origin: *");
+
+
 // Initialize the Kohana application
 require __DIR__ . '/../application/kohana.php';
 

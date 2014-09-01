@@ -57,6 +57,13 @@ class Controller_OAuth extends Controller_Layout {
 
 	public function action_authorize()
 	{
+
+        if ($this->request->method() == "OPTIONS")
+        {
+            $this->response->status(200);
+            return;
+        }
+
 		if (!$this->user)
 		{
 			// Not possible to authorize until login is finished, go back to index
@@ -106,6 +113,13 @@ class Controller_OAuth extends Controller_Layout {
 
 	public function action_token()
 	{
+
+        if ($this->request->method() == "OPTIONS")
+        {
+            $this->response->status(200);
+            return;
+        }
+
 		$server = service('oauth.server.auth');
 
 		try
